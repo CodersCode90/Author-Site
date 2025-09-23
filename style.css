@@ -629,3 +629,49 @@ button, a, input, textarea {
   text-decoration: none;
 }
 
+.contact-section {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #0f0f0f;
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+.contact-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-section label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #ddd;
+  text-align: left;
+}
+
+.contact-section input,
+.contact-section textarea {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #222;
+  background: #121212;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.contact-section button {
+  background: #ff6f61;
+  color: #fff;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.contact-section button:hover {
+  background: #ff4c3b;
+}
+
