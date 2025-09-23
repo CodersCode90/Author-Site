@@ -12,25 +12,269 @@
     <h1>Contact Me</h1>
   </header>
 
-  <section class="contact-section">
-    <form name="contact-form" method="POST" data-netlify="true" action="/thank-you.html">
-  <input type="hidden" name="form-name" value="contact-form">
-  
-  <label for="name">Name:</label>
-  <input type="text" id="name" name="name" required>
+  <section id="contact" class="contact-section">
+  <div class="contact-particles"></div>
+  <div class="contact-inner">
+    <h2>Contact Me</h2>
+    <form name="contact-form" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="contact-form">
+      <input type="hidden" name="bot-field">
+      <input type="hidden" name="redirect" value="/thank-you.html">
 
-  <label for="email">Email:</label>
-  <input type="email" id="email" name="email" required>
 
-  <label for="message">Message:</label>
-  <textarea id="message" name="message" rows="5" required></textarea>
+      <label for="name">Your Name</label>
+      <input id="name" name="name" type="text" placeholder="Your name" required>
 
-  <button type="submit">Send</button>
-    </form>  
-  </section>
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" placeholder="you@example.com" required>
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="6" placeholder="Write your message..." required></textarea>
+
+      <button type="submit" class="btn">Send Message</button>
+      <p id="contact-status" aria-live="polite" style="margin-top:10px;"></p>
+    </form>
+
+    <!-- Button Container -->
+    <div class="contact-buttons">
+    <a href="index.html" class="btn">Return to Home</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Fancy Cursor -->
+<div class="cursor"></div>
+<div class="cursor-trail-container"></div>
+
+
+<style>
+/* Contact Section */
+.contact-section { 
+  background:#0f0f0f; 
+  color:#fff; 
+  padding:48px 16px; 
+  position:relative; 
+  overflow:hidden; 
+}
+.contact-particles { 
+  position:absolute; 
+  top:0; left:0; width:100%; height:100%; 
+  background: radial-gradient(circle, rgba(255,111,97,0.05) 1px, transparent 1px);
+  background-size: 20px 20px; 
+  pointer-events:none; 
+  z-index:0;
+}
+.contact-inner { 
+  position:relative; 
+  z-index:1; 
+  max-width:700px; 
+  margin:0 auto; 
+  display:flex; 
+  flex-direction:column; 
+  gap:24px; 
+}
+.contact-inner h2 { 
+  font-family:'Playfair Display', serif; 
+  font-size:1.6rem; 
+  color:#ff6f61; 
+  text-align:center; 
+  margin-bottom:12px;
+}
+.contact-inner form { 
+  display:flex; 
+  flex-direction:column; 
+  gap:12px; 
+}
+.contact-inner label { 
+  font-weight:600; 
+  font-size:0.95rem; 
+  color:#ddd; 
+}
+.contact-inner input, .contact-inner textarea {
+  padding:12px; 
+  border-radius:8px; 
+  border:1px solid #222; 
+  background:#121212; 
+  color:#fff; 
+  font-size:1rem; 
+  transition: all 0.3s ease;
+}
+.contact-inner input::placeholder, .contact-inner textarea::placeholder { 
+  color:#888; 
+}
+.contact-inner input:focus, .contact-inner textarea:focus { 
+  outline:none; 
+  border-color:#ff6f61; 
+  box-shadow:0 0 8px rgba(255,111,97,0.4);
+}
+.contact-inner .btn { 
+  background:#ff6f61; 
+  color:#fff; 
+  border:none; 
+  padding:12px 20px; 
+  border-radius:10px; 
+  font-weight:700; 
+  cursor:pointer; 
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.contact-inner .btn:hover { 
+  transform: translateY(-2px); 
+  box-shadow:0 4px 15px rgba(255,111,97,0.4);
+}
+#contact-status { 
+  color:#9fe7b3; 
+  font-size:0.95rem; 
+  text-align:center; 
+}
+
+/* Fancy Cursor */
+.cursor {
+      position:fixed; top:0; left:0;
+      width:18px; height:18px; background:#ff6f61;
+      border-radius:50%; pointer-events:none;
+      z-index:9999; box-shadow:0 0 15px #ff6f61,0 0 30px #ff6f61;
+      transform:translate(-50%, -50%);
+      transition: transform 0.1s ease;
+    }
+
+    button, a, input, textarea {
+   cursor: none; /* hide default cursor */
+    }
+
+
+    .cursor-trail-container {
+      position:fixed; top:0; left:0;
+      width:100%; height:100%;
+      pointer-events:none;
+      z-index:9998;
+    }
+
+    .cursor-trail {
+      position:absolute; width:10px; height:10px;
+      border-radius:50%; background:#ffd700; opacity:0.8;
+      pointer-events:none; transform:translate(-50%, -50%);
+      box-shadow:0 0 10px #ffd700,0 0 20px #ff6f61;
+      animation: fadeTrail 0.6s forwards;
+    }
+
+    @keyframes fadeTrail {
+      to { opacity:0; transform:translate(-50%, -50%) scale(0); }
+    }
+
+    /* ================================
+       PARTICLES ANIMATION
+    ================================= */
+    .contact .particles .particle {
+      position:absolute; width:5px; height:5px;
+      border-radius:50%; opacity:0.8;
+      animation: floatParticles linear infinite;
+    }
+
+    @keyframes floatParticles {
+      0% { transform:translateY(0) translateX(0); opacity:0; }
+      10% { opacity:0.8; }
+      100% { transform:translateY(-300px) translateX(100px); opacity:0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor"></div>
+  <div class="cursor-trail-container"></div>
+
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.querySelector('form[name="contact-form"]');
+  const status = document.getElementById('contact-status');
+
+  function encodeFormData(formData) { return new URLSearchParams(formData).toString(); }
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.textContent = 'Sending...';
+      const fd = new FormData(form);
+
+      try {
+        const res = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: encodeFormData(fd)
+        });
+
+        if (res.ok) {
+          status.textContent = 'Thanks — your message was sent!';
+          form.reset();
+        } else {
+          status.textContent = 'Message received (might be blocked).';
+        }
+      } catch (err) {
+        console.error('Form submit error:', err);
+        status.textContent = 'Submission failed — please try again later.';
+      }
+
+      setTimeout(() => { status.textContent = ''; }, 6000);
+    });
+  }
+});
+</script>
+
+
 
   <footer class="footer">
-    <p>&copy; 2025 Michael Mangruen-Brown</p>
+    <p>&copy; 2025 Michael Mangruen-Brown. Follow me on 
+      <a href="#">TikTok</a>, <a href="#">Instagram</a>, <a href="#">Facebook</a>, <a href="#">Amazon</a>
+    </p>
   </footer>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      /* ===== CUSTOM CURSOR ===== */
+      const cursor = document.querySelector('.cursor');
+      const trailContainer = document.querySelector('.cursor-trail-container');
+
+      if(cursor && trailContainer){
+        document.addEventListener('mousemove', (e) => {
+          cursor.style.top = e.clientY + 'px';
+          cursor.style.left = e.clientX + 'px';
+
+          const trail = document.createElement('div');
+          trail.classList.add('cursor-trail');
+          trail.style.top = e.clientY + 'px';
+          trail.style.left = e.clientX + 'px';
+          trailContainer.appendChild(trail);
+
+          setTimeout(() => trail.remove(), 600);
+        });
+      }
+
+      /* ===== HERO PARTICLES ===== */
+      const particlesContainer = document.querySelector('.contact .particles');
+      if(particlesContainer){
+        for(let i=0; i<30; i++){
+          const p = document.createElement('div');
+          p.classList.add('particle');
+          p.style.left = Math.random()*100+'%';
+          p.style.top = Math.random()*100+'%';
+          const size = Math.random()*6 + 3;
+          p.style.width = size+'px';
+          p.style.height = size+'px';
+          p.style.backgroundColor = '#00f5ff';
+          const duration = Math.random()*5 + 5;
+          p.style.animationDuration = duration+'s';
+          p.style.animationDelay = Math.random()*5+'s';
+          particlesContainer.appendChild(p);
+        }
+      }
+    });
+  </script>
+
+  <div class="particles"></div>
+
+  <script src="script.js"></script>
 </body>
 </html>

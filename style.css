@@ -675,3 +675,28 @@ button, a, input, textarea {
   background: #ff4c3b;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+.contact-buttons {
+  display: flex;
+  justify-content: center; /* centers buttons horizontally */
+  gap: 20px; /* space between buttons */
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.contact-buttons .btn {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: #ff6f61;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+}
+.contact-buttons .btn:hover {
+  background: #ff4c3b;
+}
+
