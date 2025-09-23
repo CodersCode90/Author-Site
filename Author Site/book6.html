@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Beneath the Moon: Beyond the Bloodlines</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ================================
+       RESET & BASE
+    ================================= */
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'Montserrat', sans-serif; color:#fff; background:#111; overflow-x:hidden; scroll-behavior:smooth; cursor:none; }
+    h1,h2,h3 { font-family:'Playfair Display', serif; }
+
+    /* ================================
+       HERO SECTION
+    ================================= */
+    .book-hero {
+      position: relative;
+      height: 70vh;
+      display:flex; align-items:center; justify-content:center;
+      text-align:center; overflow:hidden;
+      background: linear-gradient(135deg, #111, #1a1a1a);
+    }
+
+    .book-hero .hero-overlay {
+      position:absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index:1;
+    }
+
+    .book-hero .particles {
+      position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; overflow:hidden;
+    }
+
+    .book-hero .hero-content { position:relative; z-index:2; }
+    .book-hero h1 { font-size:3rem; margin-bottom:1rem; text-shadow:0 0 15px #ff6f61; }
+    .book-hero .tagline { font-size:1.5rem; text-shadow:0 0 10px #ff6f61; }
+
+    /* ================================
+       BOOK DETAILS SECTION
+    ================================= */
+    .book-details { display:flex; flex-wrap:wrap; gap:2rem; padding:4rem 2rem; background:#111; color:#fff; justify-content:center; }
+    .book-cover img { width:250px; border-radius:12px; box-shadow:0 0 25px #ff6f61; }
+    .book-info { max-width:600px; }
+    .book-info h2 { font-family:'Playfair Display', serif; font-size:2.5rem; margin-bottom:1rem; text-shadow:0 0 10px #ff6f61; }
+    .book-info p { font-size:1.1rem; line-height:1.6; margin-bottom:1rem; }
+    .btn { display:inline-block; background:#ff6f61; color:#fff; padding:0.7rem 1.5rem; border-radius:12px; text-decoration:none; font-weight:bold; box-shadow:0 0 15px #ff6f61; transition:0.3s ease; margin-top:1rem; }
+    .btn:hover { transform:scale(1.05); box-shadow:0 0 25px #ff6f61; }
+
+    /* ================================
+       SYNOPSIS SECTION
+    ================================= */
+    .book-synopsis { padding:4rem 2rem; background:#1a1a1a; color:#fff; }
+    .book-synopsis .container { max-width:900px; margin:0 auto; }
+    .book-synopsis h2 { font-family:'Playfair Display', serif; font-size:2.5rem; margin-bottom:2rem; text-align:center; text-shadow:0 0 10px #ff6f61; }
+    .book-synopsis p { font-size:1.1rem; line-height:1.8; margin-bottom:1rem; }
+
+    /* ================================
+       FOOTER
+    ================================= */
+    .footer { padding:3rem 2rem; text-align:center; background:#000; color:#fff; }
+    .footer p { font-size:0.9rem; }
+
+    /* ================================
+       CUSTOM CURSOR + TRAIL
+    ================================= */
+    .cursor { position:fixed; top:0; left:0; width:18px; height:18px; background:#ff6f61; border-radius:50%; pointer-events:none; z-index:9999; box-shadow:0 0 15px #ff6f61,0 0 30px #ff6f61; transform:translate(-50%, -50%); transition: transform 0.1s ease; }
+    .cursor-trail-container { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9998; }
+    .cursor-trail { position:absolute; width:10px; height:10px; border-radius:50%; background:#ffd700; opacity:0.8; pointer-events:none; transform:translate(-50%, -50%); box-shadow:0 0 10px #ffd700,0 0 20px #ff6f61; animation: fadeTrail 0.6s forwards; }
+    @keyframes fadeTrail { to { opacity:0; transform:translate(-50%, -50%) scale(0); } }
+
+    button, a, input, textarea {
+  cursor: none; /* hide default cursor */
+}
+
+    a:hover .cursor,
+    button:hover .cursor {
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+    /* ================================
+       HERO PARTICLES
+    ================================= */
+    .book-hero .particles .particle { position:absolute; width:5px; height:5px; border-radius:50%; opacity:0.8; animation: floatParticles linear infinite; }
+    @keyframes floatParticles { 0% { transform:translateY(0) translateX(0); opacity:0; } 10% { opacity:0.8; } 100% { transform:translateY(-300px) translateX(100px); opacity:0; } }
+  </style>
+</head>
+<body>
+
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor"></div>
+  <div class="cursor-trail-container"></div>
+
+  <!-- HERO SECTION -->
+  <header class="hero book-hero">
+    <div class="hero-overlay"></div>
+    <div class="particles"></div>
+    <div class="hero-content">
+      <h1>Blood Beneath the Moon: Beyond the Bloodlines</h1>
+      <p class="tagline">"Under the moonlight, love becomes a battle they can’t win—or walk away from."</p>
+    </div>
+  </header>
+
+  <!-- BOOK DETAILS -->
+  <section class="book-details">
+    <div class="book-cover">
+      <img src="images/Moon.png" alt="Blood Beneath the Moon: Beyond the Bloodlines Book Cover">
+    </div>
+    <div class="book-info">
+      <h2>About the Book</h2>
+      <p>COMING SOON!</p>
+      <a href="#" class="btn">Buy on Amazon</a>
+      <a href="index.html" class="btn">Back to Home</a>
+    </div>
+  </section>
+
+  <!-- SYNOPSIS -->
+  <section class="book-synopsis">
+    <div class="container">
+      <h2>Synopsis</h2>
+      <p>COMING SOON!</p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>&copy; 2025 Michael Mangruen-Brown. All rights reserved.</p>
+  </footer>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      // CUSTOM CURSOR
+      const cursor = document.querySelector('.cursor');
+      const trailContainer = document.querySelector('.cursor-trail-container');
+      if(cursor && trailContainer){
+        document.addEventListener('mousemove', (e) => {
+          cursor.style.top = e.clientY + 'px';
+          cursor.style.left = e.clientX + 'px';
+          const trail = document.createElement('div');
+          trail.classList.add('cursor-trail');
+          trail.style.top = e.clientY + 'px';
+          trail.style.left = e.clientX + 'px';
+          trailContainer.appendChild(trail);
+          setTimeout(() => trail.remove(), 600);
+        });
+      }
+
+      // HERO PARTICLES
+      const particlesContainer = document.querySelector('.book-hero .particles');
+      if(particlesContainer){
+        for(let i=0; i<30; i++){
+          const p = document.createElement('div');
+          p.classList.add('particle');
+          p.style.left = Math.random()*100+'%';
+          p.style.top = Math.random()*100+'%';
+          const size = Math.random()*6 + 3;
+          p.style.width = size+'px';
+          p.style.height = size+'px';
+          p.style.backgroundColor = '#00f5ff';
+          const duration = Math.random()*5 + 5;
+          p.style.animationDuration = duration+'s';
+          p.style.animationDelay = Math.random()*5+'s';
+          particlesContainer.appendChild(p);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
