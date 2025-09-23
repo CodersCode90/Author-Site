@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Michael Mangruen-Brown</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor"></div>
+  <div class="cursor-trail-container"></div>
+
+  <!-- HERO SECTION -->
+  <header class="hero about-hero">
+    <div class="hero-overlay"></div>
+    <div class="particles"></div> <!-- Floating particles -->
+    <div class="hero-content">
+      <h1>About Michael Mangruen-Brown</h1>
+      <p class="tagline">Stories that linger long after the page is closed</p>
+    </div>
+  </header>
+
+  <!-- AUTHOR BIO SECTION -->
+  <section class="author-bio">
+    <div class="author-bio-shape"></div>
+    <img src="images/author.png" alt="Michael Mangruen-Brown" class="author-photo-large">
+    <div class="bio-text">
+      <h2>Hello, I’m Michael</h2>
+      <p>As a kid, my imagination was everything. It was my escape from reality where I could exist as anything or anyone. I created stories for years and only wished I could show others all of the crazy adventures I'd been on.</p>
+      <p>As I got older, the imagining never stopped but expanded. It became more clear to me what I wanted to do with my life: share my stories in whatever way I could. I have other ways to express myself from singing to writing song lyrics (where my love for writing truly began) and poetry, but it wasn't until my adult life that I wrote my first book "Run Away, Blu!".</p>
+      <p>My purpose in life had been realized and I couldn't be happier doing what I love. The journey was long and hard and I still have a long way to go with so much more to learn and experience.</p>
+      <p>I’ve been crafting stories since I can remember, exploring the grit and heart of coming-of-age journeys. My goal is to create narratives that resonate with readers, tackling love, loss, hope, and the unexpected twists of life.</p>
+      <p>My books include the <strong>Run Away, Blu!</strong> series, as well as upcoming titles exploring new characters and perspectives. Writing is my way of connecting with readers and sharing stories that stay with you.</p>
+      <a href="index.html" class="btn">Back to Home</a>
+    </div>
+  </section>
+
+  <!-- FEATURED BOOKS MINI-GRID -->
+<section class="featured-books">
+  <h2>Featured Books</h2>
+  <div class="book-grid-mini">
+    <div class="book-card">
+      <img src="images/Blu1.png" alt="Run Away, Blu!">
+      <h3>Run Away, Blu!</h3>
+    </div>
+    <div class="book-card">
+      <img src="images/Blu2.png" alt="Run Away, Blu!: Still Dreaming">
+      <h3>Run Away, Blu!: Still Dreaming</h3>
+    </div>
+    <div class="book-card">
+      <img src="images/Hazel.png" alt="Hazel's Perception">
+      <h3>Hazel's Perception: What I Know Now</h3>
+    </div>
+    <div class="book-card">
+      <img src="images/Frank.png" alt="Frank's Guilt">
+      <h3>Frank's Guilt: What I Did Then</h3>
+    </div>
+  </div>
+</section>
+
+  
+  
+  <!-- SOCIAL LINKS -->
+  <section class="social-links">
+    <h2>Follow Me</h2>
+    <p>
+      <a href="#" aria-label="TikTok">TikTok</a>,
+      <a href="#" aria-label="Instagram">Instagram</a>,
+      <a href="#" aria-label="Facebook">Facebook</a>,
+      <a href="#" aria-label="Amazon">Amazon</a>
+    </p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>&copy; 2025 Michael Mangruen-Brown. All rights reserved.</p>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // CUSTOM CURSOR
+    const cursor = document.querySelector('.cursor');
+    const trailContainer = document.querySelector('.cursor-trail-container');
+
+    document.addEventListener('mousemove', (e) => {
+      // Move main cursor
+      cursor.style.top = e.clientY + 'px';
+      cursor.style.left = e.clientX + 'px';
+
+      // Create trail particle
+      const trail = document.createElement('div');
+      trail.classList.add('cursor-trail');
+      trail.style.top = e.clientY + 'px';
+      trail.style.left = e.clientX + 'px';
+      trailContainer.appendChild(trail);
+
+      setTimeout(() => trail.remove(), 600);
+    });
+
+    // ABOUT HERO PARTICLES
+    const aboutParticlesContainer = document.querySelector('.about-hero .particles');
+    const particleCount = 30;
+
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+
+      // Random position
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top  = Math.random() * 100 + '%';
+
+      // Random size
+      const size = Math.random() * 4 + 3;
+      particle.style.width  = size + 'px';
+      particle.style.height = size + 'px';
+
+      // Color
+      particle.style.backgroundColor = '#ffd700';
+
+      // Animation timing
+      const duration = Math.random() * 5 + 5; // 5-10s
+      const delay    = Math.random() * 5;     // 0-5s
+      particle.style.animationDuration = duration + 's';
+      particle.style.animationDelay    = delay + 's';
+
+      aboutParticlesContainer.appendChild(particle);
+    }
+  </script>
+
+</body>
+</html>
