@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Michael Mangruen-Brown – Author</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HERO SECTION -->
+  <header class="hero">
+    <div class="hero-overlay"></div>
+    <div class="particles"></div>
+    <div class="hero-content">
+      <h1>Michael Mangruen-Brown</h1>
+      <p class="tagline">Stories of love, loss, and hope in unexpected places</p>
+      <a href="#books" class="btn">Explore My Books</a>
+      <img src="images/Blu1.png" alt="Run Away, Blu! Book Cover" class="hero-cover">
+    </div>
+  </header>
+
+  <!-- AUTHOR SECTION -->
+  <section class="author-intro">
+    <div class="author-shape"></div>
+    <img src="images/author.png" alt="Michael Mangruen-Brown" class="author-photo">
+    <div class="author-text">
+      <h2>Hi, I’m Michael</h2>
+      <p>I craft stories that linger long after the page is closed. My work explores the grit and heart of coming-of-age journeys, with a touch of the unexpected.</p>
+      <a href="about.html" class="btn">Read My Story</a>
+    </div>
+  </section>
+
+  <!-- BOOKS GRID -->
+  <section id="books" class="books">
+    <h2>My Books</h2>
+    <div class="book-particles"></div>
+    <div class="book-grid">
+      <div class="book-card"><img src="images/Blu1.png" alt="Run Away, Blu!"><h3>Run Away, Blu!</h3><p>“A story of escape, hope, and finding yourself in the chaos.”</p><a href="book1.html" class="btn">Learn More</a></div>
+      <div class="book-card"><img src="images/Blu2.png" alt="Run Away, Blu!: Still Dreaming"><h3>Run Away, Blu!: Still Dreaming</h3><p>“Even when life pulls you back, dreams keep you moving forward.”</p><a href="book2.html" class="btn">Learn More</a></div>
+      <div class="book-card"><img src="images/Hazel.png" alt="Hazel's Perception"><h3>Hazel's Perception: What I Know Now</h3><p>Behind the perfect image lies a story she’s never told… until now.</p><a href="book3.html" class="btn">Learn More</a></div>
+      <div class="book-card"><img src="images/Frank.png" alt="Frank's Guilt"><h3>Frank's Guilt: What I Did Then</h3><p>Some battles are fought outside… but the hardest ones are within</p><a href="book4.html" class="btn">Learn More</a></div>
+      <div class="book-card"><img src="images/Strays.png" alt="A Family of Strays"><h3>A Family of Strays</h3><p>“In a world where every stray has a story, one family finds their way home.”</p><a href="book5.html" class="btn">Learn More</a></div>
+      <div class="book-card"><img src="images/Moon.png" alt="Blood Beneath the Moon"><h3>Blood Beneath the Moon: Beyond the Bloodlines</h3><p>Under the moonlight, love becomes a battle they can’t win—or walk away from.</p><a href="book6.html" class="btn">Coming Soon</a></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>&copy; 2025 Michael Mangruen-Brown. Follow me on 
+      <a href="#">TikTok</a>, <a href="#">Instagram</a>, <a href="#">Facebook</a>, <a href="#">Amazon</a>
+    </p>
+  </footer>
+
+  <!-- Fancy Cursor -->
+  <div class="cursor"></div>
+  <div class="cursor-trail-container"></div>
+
+<section id="reviews-and-testimonials" class="reviews-section">
+  <div class="reviews-inner">
+
+    <!-- REVIEW FORM (Netlify-ready) -->
+    <div class="review-form">
+      <h2>Leave a Review</h2>
+      <form name="review-form" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="review-form">
+        <input type="hidden" name="redirect" value="/thank-you.html">
+        <input type="hidden" name="bot-field">
+        
+        <label for="name">Your Name</label>
+        <input id="name" name="name" type="text" placeholder="Your name" required>
+
+        <label for="email">Email (won't be published)</label>
+        <input id="email" name="email" type="email" placeholder="you@example.com">
+
+        <label for="book">Which book are you reviewing?</label>
+        <select id="book" name="book">
+          <option value="author">About the author</option>
+          <option value="Run Away, Blu!">Run Away, Blu!</option>
+          <option value="Run Away, Blu!: Still Dreaming">Run Away, Blu!: Still Dreaming</option>
+          <option value="Hazel's Perception">Hazel's Perception</option>
+          <option value="Frank's Guilt">Frank's Guilt</option>
+          <option value="A Family of Strays">A Family of Strays</option>
+          <option value="Blood Beneath the Moon">Blood Beneath the Moon</option>
+        </select>
+
+        <label for="review">Your Review</label>
+        <textarea id="review" name="review" rows="5" placeholder="Write your review..." required></textarea>
+
+        <button type="submit" class="btn">Submit Review</button>
+        <p id="review-status" aria-live="polite" style="margin-top:10px;"></p>
+      </form>
+    </div>
+
+    <!-- TESTIMONIAL SLIDER -->
+    <div class="testimonial-area">
+      <h2>What Readers Are Saying</h2>
+
+      <div class="testimonial-wrapper">
+        <button class="testimonial-arrow prev" aria-label="Previous">‹</button>
+        <div class="testimonial-slider-viewport">
+          <div class="testimonial-slider">
+            <div class="testimonial">
+              <p>“Michael’s storytelling is raw and deeply human. I couldn’t put the book down.”</p>
+              <h4>— Sarah L.</h4>
+            </div>
+            <div class="testimonial">
+              <p>“A battle between darkness and light in a world of chaos for a young teen. The book is highly imaginative, tense and emotional and captivating. This is a well-written story.”</p>
+              <h4>— Kathleen A.</h4>
+            </div>
+            <div class="testimonial">
+              <p>“A masterful mix of pain, hope, and love. Can’t wait for the next one!”</p>
+              <h4>— Alex R.</h4>
+            </div>
+          </div>
+        </div>
+        <button class="testimonial-arrow next" aria-label="Next">›</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+/* Keep your existing CSS here... */
+.reviews-section { background:#0f0f0f; color:#fff; padding:48px 16px; }
+.reviews-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns: 1fr; gap:36px; }
+
+/* Form */
+.review-form h2 { font-family:'Playfair Display', serif; font-size:1.6rem; margin-bottom:12px; color:#ff6f61; }
+.review-form form { display:flex; flex-direction:column; gap:10px; max-width:640px; margin:0 auto; }
+.review-form label { text-align:left; font-weight:600; font-size:0.95rem; color:#ddd; }
+.review-form input, .review-form select, .review-form textarea {
+  padding:10px; border-radius:8px; border:1px solid #222; background:#121212; color:#fff; font-size:1rem;
+}
+.review-form input::placeholder, .review-form textarea::placeholder { color:#888; }
+.review-form .btn { background:#ff6f61; color:#fff; border:none; padding:10px 16px; border-radius:10px; font-weight:700; cursor:pointer; }
+#review-status { color:#9fe7b3; font-size:0.95rem; }
+
+/* Testimonial slider */
+.testimonial-area h2 { font-family:'Playfair Display', serif; font-size:1.6rem; margin:0 0 12px 0; color:#ff6f61; text-align:center; }
+.testimonial-wrapper { display:flex; align-items:center; gap:12px; justify-content:center; }
+.testimonial-slider-viewport { width:100%; max-width:820px; overflow:hidden; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); box-shadow:0 8px 30px rgba(0,0,0,0.6); }
+.testimonial-slider { display:flex; transition: transform 600ms cubic-bezier(.22,.9,.3,1); will-change: transform; }
+.testimonial { flex:0 0 100%; padding:28px 36px; box-sizing:border-box; color:#fff; }
+.testimonial p { font-size:1.05rem; line-height:1.6; font-style:italic; color:#e6e6e6; margin:0 0 10px 0; }
+.testimonial h4 { margin:0; color:#ffd700; font-size:0.98rem; font-weight:700; }
+
+/* Arrows */
+.testimonial-arrow { background:transparent; border:2px solid rgba(255,255,255,0.08); color:#fff; padding:10px 14px; border-radius:10px; cursor:pointer; font-size:22px; }
+.testimonial-arrow:hover { background:rgba(255,255,255,0.03); transform:translateY(-2px); }
+
+/* Responsive */
+@media (min-width:900px) {
+  .reviews-inner { grid-template-columns: 1fr 1fr; align-items:start; }
+  .review-form { grid-column:1/2; }
+  .testimonial-area { grid-column:2/3; }
+  .testimonial-slider-viewport { height: 180px; }
+}
+@media (max-width:899px) {
+  .testimonial-wrapper { flex-direction:column-reverse; }
+}
+</style>
+
+<script>
+(function(){
+  document.addEventListener('DOMContentLoaded', () => {
+    const slider = document.querySelector('.testimonial-slider');
+    const prevBtn = document.querySelector('.testimonial-arrow.prev');
+    const nextBtn = document.querySelector('.testimonial-arrow.next');
+    const viewport = document.querySelector('.testimonial-slider-viewport');
+    let slides = slider.querySelectorAll('.testimonial');
+    let current = 0;
+    let autoTimer = null;
+    const AUTO_DELAY = 5000;
+
+    function refreshSlides() {
+      slides = slider.querySelectorAll('.testimonial');
+      slides.forEach(s => s.style.flex = '0 0 100%');
+      updateSliderPosition();
+    }
+
+    function showSlide(index) {
+      if (!slides.length) return;
+      current = (index + slides.length) % slides.length;
+      updateSliderPosition();
+    }
+
+    function updateSliderPosition() {
+      const translate = -current * 100;
+      slider.style.transform = 'translateX(' + translate + '%)';
+    }
+
+    function nextSlide() { showSlide(current + 1); }
+    function prevSlide() { showSlide(current - 1); }
+
+    if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); resetAuto(); });
+    if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); resetAuto(); });
+
+    function startAuto() { stopAuto(); autoTimer = setInterval(nextSlide, AUTO_DELAY); }
+    function stopAuto() { if (autoTimer) clearInterval(autoTimer); }
+    function resetAuto() { stopAuto(); startAuto(); }
+
+    viewport.addEventListener('mouseenter', stopAuto);
+    viewport.addEventListener('mouseleave', startAuto);
+
+    window.addEventListener('resize', () => {
+      slides.forEach(s => s.style.flex = '0 0 100%');
+      updateSliderPosition();
+    });
+
+    refreshSlides();
+    showSlide(0);
+    startAuto();
+
+    const form = document.querySelector('form[name="review-form"]');
+    const status = document.getElementById('review-status');
+
+    function encodeFormData(formData) { return new URLSearchParams(formData).toString(); }
+
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        status.textContent = 'Submitting...';
+        const fd = new FormData(form);
+
+        try {
+          const res = await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: encodeFormData(fd)
+          });
+
+          if (res.ok) {
+            status.textContent = 'Thanks — your review was sent! It will appear here after approval.';
+          } else {
+            status.textContent = 'Submission received (might be blocked).';
+          }
+
+          const name = (fd.get('name') || 'Anonymous').trim();
+          const book = (fd.get('book') || '').trim();
+          const reviewText = (fd.get('review') || '').trim();
+
+          if (reviewText) {
+            const newSlide = document.createElement('div');
+            newSlide.className = 'testimonial';
+            const p = document.createElement('p');
+            p.textContent = '“' + reviewText + '”';
+            const h4 = document.createElement('h4');
+            h4.textContent = '— ' + (name || 'Anonymous') + (book && book !== 'author' ? ' — ' + book : '');
+            newSlide.appendChild(p);
+            newSlide.appendChild(h4);
+
+            slider.appendChild(newSlide);
+            refreshSlides();
+            current = slides.length - 1;
+            updateSliderPosition();
+            resetAuto();
+            form.reset();
+          }
+
+        } catch (err) {
+          console.error('Form submit error:', err);
+          status.textContent = 'Submission failed — please try again later.';
+        }
+
+        setTimeout(() => { status.textContent = ''; }, 6000);
+      });
+    }
+    
+    // ---------- Load approved Netlify reviews ----------
+    async function loadApprovedReviews() {
+      const apiToken = 'YOUR_NETLIFY_PERSONAL_ACCESS_TOKEN';
+      const formId = 'review-form';
+      const apiUrl = `https://api.netlify.com/api/v1/forms/${formId}/submissions`;
+
+      try {
+        const res = await fetch(apiUrl, {
+          headers: { Authorization: `Bearer ${apiToken}` }
+        });
+        const submissions = await res.json();
+
+        submissions.forEach(sub => {
+          const name = sub.data.name || 'Anonymous';
+          const book = sub.data.book || '';
+          const reviewText = sub.data.review || '';
+          // Optionally filter only approved submissions by checking a status field
+          if (reviewText) {
+            const newSlide = document.createElement('div');
+            newSlide.className = 'testimonial';
+            const p = document.createElement('p');
+            p.textContent = '“' + reviewText + '”';
+            const h4 = document.createElement('h4');
+            h4.textContent = '— ' + name + (book && book !== 'author' ? ' — ' + book : '');
+            newSlide.appendChild(p);
+            newSlide.appendChild(h4);
+            slider.appendChild(newSlide);
+          }
+        });
+
+        refreshSlides();
+
+      } catch (err) {
+        console.error('Error loading approved reviews:', err);
+      }
+    }
+
+    // Call after DOM ready
+    loadApprovedReviews();
+
+  });
+})();
+</script>
+
+  <script src="script.js"></script>
+</body>
+</html>
