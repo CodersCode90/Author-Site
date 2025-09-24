@@ -283,7 +283,7 @@ h1, h2, h3 {
   /* Reset cursor to default for everything */
   * {
     cursor: auto !important;
-  }
+  } 
 
   /* Hide custom cursor elements */
   .cursor,
