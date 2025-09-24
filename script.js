@@ -134,6 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (form && testimonialSlider) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
+      console.log("Form submitted!"); // 🔍 Debug
 
       const name = form.querySelector("#name").value;
       const book = form.querySelector("#book").value;
@@ -141,19 +142,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Create testimonial item
       const testimonial = document.createElement("div");
-      testimonial.classList.add("testimonial");
+      testimonial.classList.add("testimonial", "active"); // important!
       testimonial.innerHTML = `
         <p class="review-text">"${review}"</p>
         <p class="review-meta">— ${name}, about <em>${book}</em></p>
       `;
 
-      // Append to slider
       testimonialSlider.appendChild(testimonial);
 
-      // Reset form
       form.reset();
-
-      // Show confirmation
       status.textContent = "✅ Thanks for your review!";
     });
   }
