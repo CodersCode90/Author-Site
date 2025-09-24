@@ -274,3 +274,23 @@ h1, h2, h3 {
   .book-cover img { width: 150px; }
   .book-info h2 { font-size: 1.5rem; }
 }
+
+
+/* ==============================
+   MOBILE CURSOR DISABLE (FORCE)
+============================== */
+@media (max-width: 768px) {
+  /* Reset cursor to default for everything */
+  * {
+    cursor: auto !important;
+  }
+
+  /* Hide custom cursor elements */
+  .cursor,
+  .cursor-trail-container,
+  .cursor-trail {
+    display: none !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+  }
+}
