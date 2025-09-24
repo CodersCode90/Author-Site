@@ -230,34 +230,28 @@ h1, h2, h3 {
 }
 
 /* ==============================
-   MOBILE STYLING & CURSOR
-   ============================== */
+   MOBILE STYLING & DISABLE CURSOR
+============================== */
 @media (max-width: 768px) {
-
   /* HERO */
-  .hero h1 { font-size: 2.2rem; }
-  .hero .tagline { font-size: 1.1rem; }
-  .hero .hero-cover { width: 150px; }
+  .book-hero h1 { font-size: 2.2rem; }
+  .book-hero .tagline { font-size: 1.2rem; }
 
-  /* AUTHOR INTRO & BIO */
-  .author-intro, .author-bio { flex-direction: column; text-align: center; padding: 3rem 1rem; }
-  .author-photo, .author-photo-large { width: 150px; height: 150px; }
-  .author-text h2, .bio-text h2 { font-size: 1.8rem; }
-  .author-text p, .bio-text p { font-size: 1rem; }
+  /* BOOK DETAILS */
+  .book-details { flex-direction: column; gap: 1.5rem; }
+  .book-cover img { width: 200px; }
+  .book-info h2 { font-size: 2rem; }
+  .book-info p { font-size: 1rem; }
 
-  /* BOOK GRID */
-  .books h2, .featured-books h2 { font-size: 2rem; }
-
-  /* TESTIMONIALS */
-  .testimonials h2 { font-size: 1.6rem; }
-  .testimonial p { font-size: 1rem; }
-
-  /* CONTACT */
-  .contact-section { margin: 20px 10px; padding: 15px; }
+  /* SYNOPSIS */
+  .book-synopsis h2 { font-size: 2rem; }
+  .book-synopsis p { font-size: 1rem; }
 
   /* BUTTONS */
   .btn { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
-  .contact-buttons { flex-direction: column; gap: 15px; }
+
+  /* FOOTER */
+  .footer p { font-size: 0.8rem; }
 
   /* DISABLE CUSTOM CURSOR */
   body,
@@ -267,20 +261,16 @@ h1, h2, h3 {
   textarea {
     cursor: auto !important;
   }
-
   .cursor,
   .cursor-trail-container,
   .cursor-trail {
     display: none !important;
   }
-
 }
 
 @media (max-width: 480px) {
-  .hero h1 { font-size: 1.8rem; }
-  .hero .tagline { font-size: 1rem; }
-  .hero .hero-cover { width: 120px; }
-  .author-photo, .author-photo-large { width: 120px; height: 120px; }
-  .author-text h2, .bio-text h2 { font-size: 1.5rem; }
+  .book-hero h1 { font-size: 1.8rem; }
+  .book-hero .tagline { font-size: 1rem; }
+  .book-cover img { width: 150px; }
+  .book-info h2 { font-size: 1.5rem; }
 }
-
