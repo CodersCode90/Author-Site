@@ -260,7 +260,6 @@ h1, h2, h3 {
   .contact-buttons { flex-direction: column; gap: 15px; }
 
   /* DISABLE CUSTOM CURSOR */
-  @media (max-width: 768px) {
   body,
   button,
   a,
@@ -275,6 +274,8 @@ h1, h2, h3 {
     display: none !important;
   }
 
+}
+
 @media (max-width: 480px) {
   .hero h1 { font-size: 1.8rem; }
   .hero .tagline { font-size: 1rem; }
@@ -282,3 +283,4 @@ h1, h2, h3 {
   .author-photo, .author-photo-large { width: 120px; height: 120px; }
   .author-text h2, .bio-text h2 { font-size: 1.5rem; }
 }
+
