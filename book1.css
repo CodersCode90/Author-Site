@@ -273,85 +273,8 @@ h1, h2, h3 {
   .author-text h2, .bio-text h2 { font-size: 1.5rem; }
 }
 
-/* ===============================
-   REVIEWS & TESTIMONIALS MOBILE FRIENDLY
-   =============================== */
+/* Remove custom cursor on mobile */
 @media (max-width: 768px) {
-  
-  /* Reviews section adjustments */
-  .reviews-section {
-    padding: 40px 15px;
-  }
-
-  .reviews-inner {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-  }
-
-  /* Review form adjustments */
-  .review-form form {
-    max-width: 100%;
-  }
-
-  .review-form input,
-  .review-form select,
-  .review-form textarea {
-    font-size: 1rem;
-    padding: 8px;
-  }
-
-  .review-form h2 {
-    font-size: 1.4rem;
-    margin-bottom: 10px;
-  }
-
-  .review-form .btn {
-    width: 100%;
-    padding: 12px 0;
-  }
-
-  /* Testimonial slider adjustments */
-  .testimonial-area h2 {
-    font-size: 1.6rem;
-    margin-bottom: 20px;
-  }
-
-  .testimonial-slider-viewport {
-    overflow-x: hidden;
-  }
-
-  .testimonial-slider {
-    flex-direction: column;
-  }
-
-  .testimonial {
-    position: relative;
-    transform: translateX(0);
-    opacity: 1;
-    width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .testimonial p {
-    font-size: 1rem;
-  }
-
-  .testimonial h4 {
-    font-size: 0.9rem;
-  }
-
-  .testimonial-nav {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .testimonial-nav button {
-    font-size: 1rem;
-    padding: 8px 12px;
-  }
-
-  /* Remove custom cursor on mobile */
   body,
   button,
   a,
