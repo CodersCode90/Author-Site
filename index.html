@@ -52,12 +52,13 @@
 
   <!-- FOOTER -->
   <footer class="footer">
-    <p>&copy; 2025 Michael Mangruen-Brown. All rights reserved. Follow me on 
+    <footer class="footer">
+  <p>&copy; 2025 Michael Mangruen-Brown. All rights reserved. Follow me on 
     <a href="https://www.tiktok.com/@greatauthor" target="_blank" rel="noopener">TikTok</a>, 
     <a href="https://www.instagram.com/michael_brown1990" target="_blank" rel="noopener">Instagram</a>, 
     <a href="https://www.facebook.com/bigblu.mangruen" target="_blank" rel="noopener">Facebook</a>, 
     <a href="https://www.amazon.com/author/michael-mangruen-brown" target="_blank" rel="noopener">Amazon</a>
-    </p>
+  </p>
 </footer>
 
   
@@ -125,6 +126,197 @@
 
   </div>
 </section>
+
+<style>
+/* Keep your existing CSS here... */
+.reviews-section { background:#0f0f0f; color:#fff; padding:48px 16px; }
+.reviews-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns: 1fr; gap:36px; }
+
+/* Form */
+.review-form h2 { font-family:'Playfair Display', serif; font-size:1.6rem; margin-bottom:12px; color:#ff6f61; }
+.review-form form { display:flex; flex-direction:column; gap:10px; max-width:640px; margin:0 auto; }
+.review-form label { text-align:left; font-weight:600; font-size:0.95rem; color:#ddd; }
+.review-form input, .review-form select, .review-form textarea {
+  padding:10px; border-radius:8px; border:1px solid #222; background:#121212; color:#fff; font-size:1rem;
+}
+.review-form input::placeholder, .review-form textarea::placeholder { color:#888; }
+.review-form .btn { background:#ff6f61; color:#fff; border:none; padding:10px 16px; border-radius:10px; font-weight:700; cursor:pointer; }
+#review-status { color:#9fe7b3; font-size:0.95rem; }
+
+/* Testimonial slider */
+.testimonial-area h2 { font-family:'Playfair Display', serif; font-size:1.6rem; margin:0 0 12px 0; color:#ff6f61; text-align:center; }
+.testimonial-wrapper { display:flex; align-items:center; gap:12px; justify-content:center; }
+.testimonial-slider-viewport { width:100%; max-width:820px; overflow:hidden; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); box-shadow:0 8px 30px rgba(0,0,0,0.6); }
+.testimonial-slider { display:flex; transition: transform 600ms cubic-bezier(.22,.9,.3,1); will-change: transform; }
+.testimonial { flex:0 0 100%; padding:28px 36px; box-sizing:border-box; color:#fff; }
+.testimonial p { font-size:1.05rem; line-height:1.6; font-style:italic; color:#e6e6e6; margin:0 0 10px 0; }
+.testimonial h4 { margin:0; color:#ffd700; font-size:0.98rem; font-weight:700; }
+
+/* Arrows */
+.testimonial-arrow { background:transparent; border:2px solid rgba(255,255,255,0.08); color:#fff; padding:10px 14px; border-radius:10px; cursor:pointer; font-size:22px; }
+.testimonial-arrow:hover { background:rgba(255,255,255,0.03); transform:translateY(-2px); }
+
+/* Responsive */
+@media (min-width:900px) {
+  .reviews-inner { grid-template-columns: 1fr 1fr; align-items:start; }
+  .review-form { grid-column:1/2; }
+  .testimonial-area { grid-column:2/3; }
+  .testimonial-slider-viewport { height: 180px; }
+}
+@media (max-width:899px) {
+  .testimonial-wrapper { flex-direction:column-reverse; }
+}
+</style>
+
+<script>
+(function(){
+  document.addEventListener('DOMContentLoaded', () => {
+    const slider = document.querySelector('.testimonial-slider');
+    const prevBtn = document.querySelector('.testimonial-arrow.prev');
+    const nextBtn = document.querySelector('.testimonial-arrow.next');
+    const viewport = document.querySelector('.testimonial-slider-viewport');
+    let slides = slider.querySelectorAll('.testimonial');
+    let current = 0;
+    let autoTimer = null;
+    const AUTO_DELAY = 5000;
+
+    function refreshSlides() {
+      slides = slider.querySelectorAll('.testimonial');
+      slides.forEach(s => s.style.flex = '0 0 100%');
+      updateSliderPosition();
+    }
+
+    function showSlide(index) {
+      if (!slides.length) return;
+      current = (index + slides.length) % slides.length;
+      updateSliderPosition();
+    }
+
+    function updateSliderPosition() {
+      const translate = -current * 100;
+      slider.style.transform = 'translateX(' + translate + '%)';
+    }
+
+    function nextSlide() { showSlide(current + 1); }
+    function prevSlide() { showSlide(current - 1); }
+
+    if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); resetAuto(); });
+    if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); resetAuto(); });
+
+    function startAuto() { stopAuto(); autoTimer = setInterval(nextSlide, AUTO_DELAY); }
+    function stopAuto() { if (autoTimer) clearInterval(autoTimer); }
+    function resetAuto() { stopAuto(); startAuto(); }
+
+    viewport.addEventListener('mouseenter', stopAuto);
+    viewport.addEventListener('mouseleave', startAuto);
+
+    window.addEventListener('resize', () => {
+      slides.forEach(s => s.style.flex = '0 0 100%');
+      updateSliderPosition();
+    });
+
+    refreshSlides();
+    showSlide(0);
+    startAuto();
+
+    const form = document.querySelector('form[name="review-form"]');
+    const status = document.getElementById('review-status');
+
+    function encodeFormData(formData) { return new URLSearchParams(formData).toString(); }
+
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        status.textContent = 'Submitting...';
+        const fd = new FormData(form);
+
+        try {
+          const res = await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: encodeFormData(fd)
+          });
+
+          if (res.ok) {
+            status.textContent = 'Thanks — your review was sent! It will appear here after approval.';
+          } else {
+            status.textContent = 'Submission received (might be blocked).';
+          }
+
+          const name = (fd.get('name') || 'Anonymous').trim();
+          const book = (fd.get('book') || '').trim();
+          const reviewText = (fd.get('review') || '').trim();
+
+          if (reviewText) {
+            const newSlide = document.createElement('div');
+            newSlide.className = 'testimonial';
+            const p = document.createElement('p');
+            p.textContent = '“' + reviewText + '”';
+            const h4 = document.createElement('h4');
+            h4.textContent = '— ' + (name || 'Anonymous') + (book && book !== 'author' ? ' — ' + book : '');
+            newSlide.appendChild(p);
+            newSlide.appendChild(h4);
+
+            slider.appendChild(newSlide);
+            refreshSlides();
+            current = slides.length - 1;
+            updateSliderPosition();
+            resetAuto();
+            form.reset();
+          }
+
+        } catch (err) {
+          console.error('Form submit error:', err);
+          status.textContent = 'Submission failed — please try again later.';
+        }
+
+        setTimeout(() => { status.textContent = ''; }, 6000);
+      });
+    }
+    
+    // ---------- Load approved Netlify reviews ----------
+    async function loadApprovedReviews() {
+      const apiToken = 'YOUR_NETLIFY_PERSONAL_ACCESS_TOKEN';
+      const formId = 'review-form';
+      const apiUrl = `https://api.netlify.com/api/v1/forms/${formId}/submissions`;
+
+      try {
+        const res = await fetch(apiUrl, {
+          headers: { Authorization: `Bearer ${apiToken}` }
+        });
+        const submissions = await res.json();
+
+        submissions.forEach(sub => {
+          const name = sub.data.name || 'Anonymous';
+          const book = sub.data.book || '';
+          const reviewText = sub.data.review || '';
+          // Optionally filter only approved submissions by checking a status field
+          if (reviewText) {
+            const newSlide = document.createElement('div');
+            newSlide.className = 'testimonial';
+            const p = document.createElement('p');
+            p.textContent = '“' + reviewText + '”';
+            const h4 = document.createElement('h4');
+            h4.textContent = '— ' + name + (book && book !== 'author' ? ' — ' + book : '');
+            newSlide.appendChild(p);
+            newSlide.appendChild(h4);
+            slider.appendChild(newSlide);
+          }
+        });
+
+        refreshSlides();
+
+      } catch (err) {
+        console.error('Error loading approved reviews:', err);
+      }
+    }
+
+    // Call after DOM ready
+    loadApprovedReviews();
+
+  });
+})();
+</script>
 
   <script src="script.js"></script>
 </body>
