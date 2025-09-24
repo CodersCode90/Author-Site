@@ -275,28 +275,30 @@
     
     // ---------- Load approved Netlify reviews ----------
     async function loadApprovedReviews() {
-      const apiToken = 'YOUR_NETLIFY_PERSONAL_ACCESS_TOKEN';
-      const formId = 'review-form';
-      const apiUrl = `https://api.netlify.com/api/v1/forms/${formId}/submissions`;
+      // Call the serverless function which will use a server-side token
+      const functionUrl = '/.netlify/functions/get-reviews';
 
       try {
-        const res = await fetch(apiUrl, {
-          headers: { Authorization: `Bearer ${apiToken}` }
-        });
+        const res = await fetch(functionUrl);
+        if (!res.ok) {
+          const text = await res.text();
+          console.error('Failed to load reviews from function:', res.status, text);
+          return;
+        }
+
         const submissions = await res.json();
 
         submissions.forEach(sub => {
-          const name = sub.data.name || 'Anonymous';
-          const book = sub.data.book || '';
-          const reviewText = sub.data.review || '';
-          // Optionally filter only approved submissions by checking a status field
+          const name = sub.name || 'Anonymous';
+          const book = sub.book || '';
+          const reviewText = sub.review || '';
           if (reviewText) {
             const newSlide = document.createElement('div');
             newSlide.className = 'testimonial';
             const p = document.createElement('p');
-            p.textContent = '“' + reviewText + '”';
+            p.textContent = '\u201c' + reviewText + '\u201d';
             const h4 = document.createElement('h4');
-            h4.textContent = '— ' + name + (book && book !== 'author' ? ' — ' + book : '');
+            h4.textContent = '\u2014 ' + name + (book && book !== 'author' ? ' \u2014 ' + book : '');
             newSlide.appendChild(p);
             newSlide.appendChild(h4);
             slider.appendChild(newSlide);
@@ -309,8 +311,10 @@
         console.error('Error loading approved reviews:', err);
       }
     }
-
++
     // Call after DOM ready
+    loadApprovedReviews();
++
     loadApprovedReviews();
 
   });
