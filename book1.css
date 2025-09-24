@@ -256,7 +256,7 @@ h1, h2, h3 {
   /* DISABLE CUSTOM CURSOR */
   body,
   button,
-  a,
+  a, 
   input,
   textarea {
     cursor: auto !important;
