@@ -228,3 +228,47 @@ h1, h2, h3 {
 @keyframes fadeTrail {
   to { opacity: 0; transform: translate(-50%, -50%) scale(0); }
 }
+
+/* ==============================
+   MOBILE STYLING & CURSOR
+   ============================== */
+@media (max-width: 768px) {
+
+  /* HERO */
+  .hero h1 { font-size: 2.2rem; }
+  .hero .tagline { font-size: 1.1rem; }
+  .hero .hero-cover { width: 150px; }
+
+  /* AUTHOR INTRO & BIO */
+  .author-intro, .author-bio { flex-direction: column; text-align: center; padding: 3rem 1rem; }
+  .author-photo, .author-photo-large { width: 150px; height: 150px; }
+  .author-text h2, .bio-text h2 { font-size: 1.8rem; }
+  .author-text p, .bio-text p { font-size: 1rem; }
+
+  /* BOOK GRID */
+  .books h2, .featured-books h2 { font-size: 2rem; }
+
+  /* TESTIMONIALS */
+  .testimonials h2 { font-size: 1.6rem; }
+  .testimonial p { font-size: 1rem; }
+
+  /* CONTACT */
+  .contact-section { margin: 20px 10px; padding: 15px; }
+
+  /* BUTTONS */
+  .btn { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+  .contact-buttons { flex-direction: column; gap: 15px; }
+
+  /* DISABLE CUSTOM CURSOR */
+  body, button, a, input, textarea { cursor: auto; }
+  .cursor, .cursor-trail-container { display: none; }
+
+}
+
+@media (max-width: 480px) {
+  .hero h1 { font-size: 1.8rem; }
+  .hero .tagline { font-size: 1rem; }
+  .hero .hero-cover { width: 120px; }
+  .author-photo, .author-photo-large { width: 120px; height: 120px; }
+  .author-text h2, .bio-text h2 { font-size: 1.5rem; }
+}
