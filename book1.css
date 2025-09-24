@@ -260,9 +260,6 @@ h1, h2, h3 {
   .contact-buttons { flex-direction: column; gap: 15px; }
 
   /* DISABLE CUSTOM CURSOR */
-  body, button, a, input, textarea { cursor: auto; }
-  .cursor, .cursor-trail-container { display: none; }
-
 }
 
 @media (max-width: 480px) {
