@@ -126,3 +126,35 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("form[name='review-form']");
+  const status = document.getElementById("review-status");
+  const testimonialSlider = document.querySelector(".testimonial-slider");
+
+  if (form && testimonialSlider) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const name = form.querySelector("#name").value;
+      const book = form.querySelector("#book").value;
+      const review = form.querySelector("#review").value;
+
+      // Create testimonial item
+      const testimonial = document.createElement("div");
+      testimonial.classList.add("testimonial");
+      testimonial.innerHTML = `
+        <p class="review-text">"${review}"</p>
+        <p class="review-meta">— ${name}, about <em>${book}</em></p>
+      `;
+
+      // Append to slider
+      testimonialSlider.appendChild(testimonial);
+
+      // Reset form
+      form.reset();
+
+      // Show confirmation
+      status.textContent = "✅ Thanks for your review!";
+    });
+  }
+});
