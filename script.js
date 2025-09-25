@@ -234,31 +234,70 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // ---------- Load existing reviews (Netlify submissions API) ----------
     async function loadReviews() {
-      try {
-        const res = await fetch('/.netlify/functions/get-reviews');
-        if (!res.ok) throw new Error('Failed to load reviews');
-        const reviews = await res.json();
+  try {
+    const res = await fetch("/.netlify/functions/getReviews");
+    const reviews = await res.json();
 
-        reviews.forEach(r => {
-          const newSlide = document.createElement('div');
-          newSlide.className = 'testimonial';
-          const p = document.createElement('p');
-          p.textContent = '“' + r.review + '”';
-          const h4 = document.createElement('h4');
-          h4.textContent = '— ' + (r.name || 'Anonymous') + (r.book ? ' — ' + r.book : '');
-          newSlide.appendChild(p);
-          newSlide.appendChild(h4);
+    const slider = document.querySelector('.testimonial-slider');
+    slider.innerHTML = ""; // Clear initial testimonials
 
-          slider.appendChild(newSlide);
-        });
+    reviews.forEach(r => {
+      const div = document.createElement("div");
+      div.className = "testimonial";
 
-        refreshSlides();
-      } catch (err) {
-        console.error('Error loading reviews:', err);
-      }
-    }
+      const p = document.createElement("p");
+      p.textContent = `“${r.review}”`;
 
-    loadReviews();
+      const h4 = document.createElement("h4");
+      h4.textContent = `— ${r.name}${r.book && r.book !== "author" ? " — " + r.book : ""}`;
+
+      div.appendChild(p);
+      div.appendChild(h4);
+      slider.appendChild(div);
+    });
+
+    refreshSlides(); // Reuse your existing slider function
+  } catch (err) {
+    console.error("Failed to load reviews:", err);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadReviews);
+
 
   });
 })();
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const slider = document.querySelector(".testimonial-slider");
+
+  if (!slider) return;
+
+  try {
+    const res = await fetch("/.netlify/functions/get-reviews");
+
+    if (!res.ok) {
+      console.error('get-reviews function returned', res.status);
+      slider.innerHTML = `<div class="testimonial active"><p>Couldn\'t load reviews right now.</p></div>`;
+      return;
+    }
+
+    const reviews = await res.json();
+
+    if (!Array.isArray(reviews) || !reviews.length) {
+      slider.innerHTML = `<div class="testimonial active"><p>No reviews yet. Be the first!</p></div>`;
+      return;
+    }
+
+    slider.innerHTML = reviews.map((r, i) => `
+      <div class="testimonial ${i === 0 ? "active" : ""}">
+        <p>"${(r.review || '').replace(/\"/g, '\\"')}"</p>
+        <h4>- ${(r.name || 'Anonymous')}${r.book ? `, <em>${r.book}</em>` : ""}</h4>
+      </div>
+    `).join("");
+
+  } catch (err) {
+    console.error("Error fetching reviews:", err);
+    slider.innerHTML = `<div class="testimonial active"><p>Couldn\'t load reviews right now.</p></div>`;
+  }
+});
