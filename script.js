@@ -126,29 +126,139 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// reviews.js
-document.addEventListener("DOMContentLoaded", async () => {
-  const slider = document.querySelector(".testimonial-slider");
+(function(){
+  document.addEventListener('DOMContentLoaded', () => {
+    const slider = document.querySelector('.testimonial-slider');
+    const prevBtn = document.querySelector('.testimonial-arrow.prev');
+    const nextBtn = document.querySelector('.testimonial-arrow.next');
+    const viewport = document.querySelector('.testimonial-slider-viewport');
+    let slides = slider.querySelectorAll('.testimonial');
+    let current = 0;
+    let autoTimer = null;
+    const AUTO_DELAY = 5000;
 
-  if (!slider) return;
-
-  try {
-    const res = await fetch("/.netlify/functions/get-reviews");
-    const reviews = await res.json();
-
-    if (!reviews.length) {
-      slider.innerHTML = `<div class="testimonial active"><p>Be the first to leave a review!</p></div>`;
-      return;
+    function refreshSlides() {
+      slides = slider.querySelectorAll('.testimonial');
+      slides.forEach(s => s.style.flex = '0 0 100%');
+      updateSliderPosition();
     }
 
-    slider.innerHTML = reviews.map((r, i) => `
-      <div class="testimonial ${i === 0 ? "active" : ""}">
-        <p>"${r.review}"</p>
-        <h4>- ${r.name}${r.book ? `, <em>${r.book}</em>` : ""}</h4>
-      </div>
-    `).join("");
-  } catch (err) {
-    console.error("Error fetching reviews:", err);
-    slider.innerHTML = `<div class="testimonial active"><p>Couldn’t load reviews right now.</p></div>`;
-  }
-});
+    function showSlide(index) {
+      if (!slides.length) return;
+      current = (index + slides.length) % slides.length;
+      updateSliderPosition();
+    }
+
+    function updateSliderPosition() {
+      const translate = -current * 100;
+      slider.style.transform = 'translateX(' + translate + '%)';
+    }
+
+    function nextSlide() { showSlide(current + 1); }
+    function prevSlide() { showSlide(current - 1); }
+
+    if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); resetAuto(); });
+    if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); resetAuto(); });
+
+    function startAuto() { stopAuto(); autoTimer = setInterval(nextSlide, AUTO_DELAY); }
+    function stopAuto() { if (autoTimer) clearInterval(autoTimer); }
+    function resetAuto() { stopAuto(); startAuto(); }
+
+    viewport.addEventListener('mouseenter', stopAuto);
+    viewport.addEventListener('mouseleave', startAuto);
+
+    window.addEventListener('resize', () => {
+      slides.forEach(s => s.style.flex = '0 0 100%');
+      updateSliderPosition();
+    });
+
+    refreshSlides();
+    showSlide(0);
+    startAuto();
+
+    // ---------- Handle review form ----------
+    const form = document.querySelector('form[name="review-form"]');
+    const status = document.getElementById('review-status');
+
+    function encodeFormData(formData) { return new URLSearchParams(formData).toString(); }
+
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        status.textContent = 'Submitting...';
+        const fd = new FormData(form);
+
+        try {
+          const res = await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: encodeFormData(fd)
+          });
+
+          if (res.ok) {
+            status.textContent = 'Thanks — your review was sent! It will appear here after approval.';
+          } else {
+            status.textContent = 'Submission received (might be blocked).';
+          }
+
+          const name = (fd.get('name') || 'Anonymous').trim();
+          const book = (fd.get('book') || '').trim();
+          const reviewText = (fd.get('review') || '').trim();
+
+          if (reviewText) {
+            const newSlide = document.createElement('div');
+            newSlide.className = 'testimonial';
+            const p = document.createElement('p');
+            p.textContent = '“' + reviewText + '”';
+            const h4 = document.createElement('h4');
+            h4.textContent = '— ' + (name || 'Anonymous') + (book && book !== 'author' ? ' — ' + book : '');
+            newSlide.appendChild(p);
+            newSlide.appendChild(h4);
+
+            slider.appendChild(newSlide);
+            refreshSlides();
+            current = slides.length - 1;
+            updateSliderPosition();
+            resetAuto();
+            form.reset();
+          }
+
+        } catch (err) {
+          console.error('Form submit error:', err);
+          status.textContent = 'Submission failed — please try again later.';
+        }
+
+        setTimeout(() => { status.textContent = ''; }, 6000);
+      });
+    }
+
+    // ---------- Load existing reviews (Netlify submissions API) ----------
+    async function loadReviews() {
+      try {
+        const res = await fetch('/.netlify/functions/get-reviews');
+        if (!res.ok) throw new Error('Failed to load reviews');
+        const reviews = await res.json();
+
+        reviews.forEach(r => {
+          const newSlide = document.createElement('div');
+          newSlide.className = 'testimonial';
+          const p = document.createElement('p');
+          p.textContent = '“' + r.review + '”';
+          const h4 = document.createElement('h4');
+          h4.textContent = '— ' + (r.name || 'Anonymous') + (r.book ? ' — ' + r.book : '');
+          newSlide.appendChild(p);
+          newSlide.appendChild(h4);
+
+          slider.appendChild(newSlide);
+        });
+
+        refreshSlides();
+      } catch (err) {
+        console.error('Error loading reviews:', err);
+      }
+    }
+
+    loadReviews();
+
+  });
+})();
