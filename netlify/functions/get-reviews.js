@@ -39,3 +39,31 @@ export async function handler(event, context) {
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
   }
 }
+
+// reviews.js
+document.addEventListener("DOMContentLoaded", async () => {
+  const slider = document.querySelector(".testimonial-slider");
+
+  if (!slider) return;
+
+  try {
+    const res = await fetch("/.netlify/functions/get-reviews");
+    const reviews = await res.json();
+
+    if (!reviews.length) {
+      slider.innerHTML = `<div class="testimonial active"><p>Be the first to leave a review!</p></div>`;
+      return;
+    }
+
+    slider.innerHTML = reviews.map((r, i) => `
+      <div class="testimonial ${i === 0 ? "active" : ""}">
+        <p>"${r.review}"</p>
+        <h4>- ${r.name}${r.book ? `, <em>${r.book}</em>` : ""}</h4>
+      </div>
+    `).join("");
+  } catch (err) {
+    console.error("Error fetching reviews:", err);
+    slider.innerHTML = `<div class="testimonial active"><p>Couldn’t load reviews right now.</p></div>`;
+  }
+});
+

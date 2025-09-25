@@ -126,32 +126,29 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.querySelector("form[name='review-form']");
-  const status = document.getElementById("review-status");
-  const testimonialSlider = document.querySelector(".testimonial-slider");
+// reviews.js
+document.addEventListener("DOMContentLoaded", async () => {
+  const slider = document.querySelector(".testimonial-slider");
 
-  if (form && testimonialSlider) {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      console.log("Form submitted!"); // 🔍 Debug
+  if (!slider) return;
 
-      const name = form.querySelector("#name").value;
-      const book = form.querySelector("#book").value;
-      const review = form.querySelector("#review").value;
+  try {
+    const res = await fetch("/.netlify/functions/get-reviews");
+    const reviews = await res.json();
 
-      // Create testimonial item
-      const testimonial = document.createElement("div");
-      testimonial.classList.add("testimonial", "active"); // important!
-      testimonial.innerHTML = `
-        <p class="review-text">"${review}"</p>
-        <p class="review-meta">— ${name}, about <em>${book}</em></p>
-      `;
+    if (!reviews.length) {
+      slider.innerHTML = `<div class="testimonial active"><p>Be the first to leave a review!</p></div>`;
+      return;
+    }
 
-      testimonialSlider.appendChild(testimonial);
-
-      form.reset();
-      status.textContent = "✅ Thanks for your review!";
-    });
+    slider.innerHTML = reviews.map((r, i) => `
+      <div class="testimonial ${i === 0 ? "active" : ""}">
+        <p>"${r.review}"</p>
+        <h4>- ${r.name}${r.book ? `, <em>${r.book}</em>` : ""}</h4>
+      </div>
+    `).join("");
+  } catch (err) {
+    console.error("Error fetching reviews:", err);
+    slider.innerHTML = `<div class="testimonial active"><p>Couldn’t load reviews right now.</p></div>`;
   }
 });
