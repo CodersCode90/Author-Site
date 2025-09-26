@@ -1,5 +1,3 @@
-import fetch from 'node-fetch';
-
 export async function handler() {
   const apiToken = process.env.NETLIFY_API_TOKEN; // set this in your Netlify dashboard
   const formId = '68d2282299db73000815a5f9';
