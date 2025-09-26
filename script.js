@@ -198,7 +198,7 @@ window.addEventListener('DOMContentLoaded', () => {
           if (res.ok) {
             status.textContent = 'Thanks — your review was sent! It will appear here after approval.';
           } else {
-            status.textContent = 'Submission received (might be blocked).';
+            status.textContent = 'Submission received.';
           }
 
           const name = (fd.get('name') || 'Anonymous').trim();
