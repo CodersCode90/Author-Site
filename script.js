@@ -235,7 +235,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // ---------- Load existing reviews (Netlify submissions API) ----------
     async function loadReviews() {
   try {
-    const res = await fetch("/.netlify/functions/getReviews");
+    const res = await fetch("/.netlify/functions/get-reviews");
     const reviews = await res.json();
 
     const slider = document.querySelector('.testimonial-slider');
