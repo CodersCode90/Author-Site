@@ -132,17 +132,6 @@ window.addEventListener('DOMContentLoaded', () => {
     const prevBtn = document.querySelector('.testimonial-arrow.prev');
     const nextBtn = document.querySelector('.testimonial-arrow.next');
     const viewport = document.querySelector('.testimonial-slider-viewport');
-
-    if (!slider) {
-      console.warn('No .testimonial-slider found — skipping testimonials init');
-      return;
-    }
-
-    // Remove any empty placeholder testimonials (from your HTML)
-    Array.from(slider.querySelectorAll('.testimonial')).forEach(t => {
-      if (t.textContent.trim() === '') t.remove();
-    });
-
     let slides = slider.querySelectorAll('.testimonial');
     let current = 0;
     let autoTimer = null;
@@ -151,7 +140,6 @@ window.addEventListener('DOMContentLoaded', () => {
     function refreshSlides() {
       slides = slider.querySelectorAll('.testimonial');
       slides.forEach(s => s.style.flex = '0 0 100%');
-      if (current >= slides.length) current = Math.max(0, slides.length - 1);
       updateSliderPosition();
     }
 
@@ -173,20 +161,17 @@ window.addEventListener('DOMContentLoaded', () => {
     if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); resetAuto(); });
 
     function startAuto() { stopAuto(); autoTimer = setInterval(nextSlide, AUTO_DELAY); }
-    function stopAuto() { if (autoTimer) clearInterval(autoTimer); autoTimer = null; }
+    function stopAuto() { if (autoTimer) clearInterval(autoTimer); }
     function resetAuto() { stopAuto(); startAuto(); }
 
-    if (viewport) {
-      viewport.addEventListener('mouseenter', stopAuto);
-      viewport.addEventListener('mouseleave', startAuto);
-    }
+    viewport.addEventListener('mouseenter', stopAuto);
+    viewport.addEventListener('mouseleave', startAuto);
 
     window.addEventListener('resize', () => {
       slides.forEach(s => s.style.flex = '0 0 100%');
       updateSliderPosition();
     });
 
-    // initial setup
     refreshSlides();
     showSlide(0);
     startAuto();
@@ -214,7 +199,6 @@ window.addEventListener('DOMContentLoaded', () => {
             status.textContent = 'Thanks — your review was sent! It will appear here after approval.';
           } else {
             status.textContent = 'Submission received (might be blocked).';
-            console.warn('Form POST returned non-ok:', res.status);
           }
 
           const name = (fd.get('name') || 'Anonymous').trim();
@@ -224,7 +208,6 @@ window.addEventListener('DOMContentLoaded', () => {
           if (reviewText) {
             const newSlide = document.createElement('div');
             newSlide.className = 'testimonial';
-            newSlide.dataset.source = 'local';
             const p = document.createElement('p');
             p.textContent = '“' + reviewText + '”';
             const h4 = document.createElement('h4');
@@ -234,7 +217,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
             slider.appendChild(newSlide);
             refreshSlides();
-            slides = slider.querySelectorAll('.testimonial');
             current = slides.length - 1;
             updateSliderPosition();
             resetAuto();
@@ -251,59 +233,40 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     // ---------- Load existing reviews (Netlify submissions API) ----------
-    async function loadReviews() {
-      try {
-        const res = await fetch("/.netlify/functions/get-reviews");
+    // ---------- Load existing reviews (Netlify submissions API) ----------
+async function loadReviews() {
+  try {
+    const res = await fetch("/.netlify/functions/get-reviews");
+    const reviews = await res.json();
 
-        if (!res.ok) {
-          const txt = await res.text().catch(()=>'');
-          throw new Error('get-reviews function returned ' + res.status + ' ' + txt);
-        }
+    const slider = document.querySelector('.testimonial-slider');
 
-        const reviews = await res.json();
-        if (!Array.isArray(reviews)) {
-          console.warn('get-reviews returned non-array', reviews);
-          return;
-        }
+    // ✅ Add Netlify reviews without nuking the user-submitted ones
+    reviews.forEach(r => {
+      const div = document.createElement("div");
+      div.className = "testimonial";
 
-        console.info('Fetched reviews:', reviews.length);
+      const p = document.createElement("p");
+      p.textContent = `“${r.review}”`;
 
-        // remove empty placeholder testimonials (if any slipped through)
-        Array.from(slider.querySelectorAll('.testimonial')).forEach(t => {
-          if (t.textContent.trim() === '') t.remove();
-        });
+      const h4 = document.createElement("h4");
+      h4.textContent = `— ${r.name}${r.book && r.book !== "author" ? " — " + r.book : ""}`;
 
-        // avoid duplicates: compare by exact review text
-        const existingTexts = Array.from(slider.querySelectorAll('.testimonial p')).map(p => p.textContent.trim());
+      div.appendChild(p);
+      div.appendChild(h4);
 
-        reviews.forEach(r => {
-          const text = `“${(r.review || '').trim()}”`;
-          if (!text || text === '“”') return;
-          if (existingTexts.includes(text)) {
-            // already present (either local submission or previously loaded)
-            return;
-          }
-          const div = document.createElement('div');
-          div.className = 'testimonial';
-          const p = document.createElement('p');
-          p.textContent = text;
-          const h4 = document.createElement('h4');
-          h4.textContent = `— ${r.name || 'Anonymous'}${r.book && r.book !== 'author' ? ' — ' + r.book : ''}`;
-          div.appendChild(p);
-          div.appendChild(h4);
-          slider.appendChild(div);
-          existingTexts.push(text);
-        });
+      slider.appendChild(div);
+    });
 
-        refreshSlides();
-      } catch (err) {
-        console.error('Failed to load reviews:', err);
-      }
-    }
+    refreshSlides(); // Reuse your existing slider function
+  } catch (err) {
+    console.error("Failed to load reviews:", err);
+  }
+}
 
-    // call it now (inside the same DOMContentLoaded handler)
-    loadReviews();
 
-  }); // end DOMContentLoaded
+  loadReviews();
+
+
+  });
 })();
-
