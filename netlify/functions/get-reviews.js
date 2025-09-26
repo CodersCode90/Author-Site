@@ -8,7 +8,7 @@ export async function handler() {
   if (!apiToken) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Missing NETLIFY_TOKEN' })
+      body: JSON.stringify({ error: 'Missing NETLIFY_API_TOKEN' })
     };
   }
 
