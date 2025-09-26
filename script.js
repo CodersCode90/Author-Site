@@ -22,48 +22,117 @@ if (cursor && trailContainer) {
 }
 
 // ==============================
-// PARTICLES FOR HERO, ABOUT, BOOK, INDEX
+// INDEX HERO PARTICLES
 // ==============================
-function generateParticles(containerSelector, count, sizeRange, color, durationRange, delayRange) {
-  const container = document.querySelector(containerSelector);
-  if (!container) return;
-
-  for (let i = 0; i < count; i++) {
-    const particle = document.createElement('div');
-    particle.classList.add('particle');
-
-    particle.style.left = Math.random() * 100 + '%';
-    particle.style.top = Math.random() * 100 + '%';
-
-    const size = Math.random() * (sizeRange[1] - sizeRange[0]) + sizeRange[0];
-    particle.style.width = size + 'px';
-    particle.style.height = size + 'px';
-    particle.style.backgroundColor = color;
-
-    particle.style.animationDuration = (Math.random() * (durationRange[1] - durationRange[0]) + durationRange[0]) + 's';
-    particle.style.animationDelay = Math.random() * (delayRange[1] - delayRange[0]) + delayRange[0] + 's';
-
-    container.appendChild(particle);
-  }
-}
-
 window.addEventListener('DOMContentLoaded', () => {
-  generateParticles('.hero .particles', 30, [4, 6], '#ffd700', [4, 10], [0, 6]);
-  generateParticles('.about-hero .particles', 30, [3, 4], '#ffd700', [5, 10], [0, 5]);
-  generateParticles('.book-hero .particles', 30, [4, 6], '#00f5ff', [4, 10], [0, 6]);
-  generateParticles('.book-particles', 30, [4, 6], '#ff6f61', [4, 10], [0, 6]);
+  const indexParticlesContainer = document.querySelector('.hero .particles');
+  if (indexParticlesContainer) {
+    const particleCount = 30;
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+      const size = Math.random() * 6 + 4;
+      particle.style.width = size + 'px';
+      particle.style.height = size + 'px';
+      particle.style.backgroundColor = '#ffd700';
+      particle.style.animationDuration = (Math.random() * 6 + 4) + 's';
+      particle.style.animationDelay = Math.random() * 6 + 's';
+
+      indexParticlesContainer.appendChild(particle);
+    }
+  }
 });
 
 // ==============================
-// TESTIMONIAL SLIDER + REVIEWS
+// ABOUT PAGE PARTICLES
 // ==============================
+window.addEventListener('DOMContentLoaded', () => {
+  const aboutParticlesContainer = document.querySelector('.about-hero .particles');
+  if (aboutParticlesContainer) {
+    const aboutParticleCount = 30;
+    for (let i = 0; i < aboutParticleCount; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+      const size = Math.random() * 4 + 3;
+      particle.style.width = size + 'px';
+      particle.style.height = size + 'px';
+      particle.style.backgroundColor = '#ffd700';
+      particle.style.animationDuration = (Math.random() * 5 + 5) + 's';
+      particle.style.animationDelay = Math.random() * 5 + 's';
+
+      aboutParticlesContainer.appendChild(particle);
+    }
+  }
+});
+
+// ==============================
+// BOOK PAGE PARTICLES
+// ==============================
+window.addEventListener('DOMContentLoaded', () => {
+  const bookParticlesContainer = document.querySelector('.book-hero .particles');
+  if (bookParticlesContainer) {
+    const bookParticleCount = 30;
+    for (let i = 0; i < bookParticleCount; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+      const size = Math.random() * 6 + 4;
+      particle.style.width = size + 'px';
+      particle.style.height = size + 'px';
+      particle.style.backgroundColor = '#00f5ff';
+      particle.style.animationDuration = (Math.random() * 6 + 4) + 's';
+      particle.style.animationDelay = Math.random() * 6 + 's';
+
+      bookParticlesContainer.appendChild(particle);
+    }
+  }
+});
+
+// ==============================
+// INDEX BOOK PARTICLES
+// ==============================
+window.addEventListener('DOMContentLoaded', () => {
+  const bookParticlesContainer = document.querySelector('.book-particles');
+  if (bookParticlesContainer) {
+    const particleCount = 30;
+
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+
+      // Random position within the books section
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+
+      // Random size
+      const size = Math.random() * 6 + 4;
+      particle.style.width = size + 'px';
+      particle.style.height = size + 'px';
+
+      // Random animation duration and delay
+      particle.style.animationDuration = (Math.random() * 6 + 4) + 's';
+      particle.style.animationDelay = Math.random() * 6 + 's';
+
+      bookParticlesContainer.appendChild(particle);
+    }
+  }
+});
+
 (function(){
   document.addEventListener('DOMContentLoaded', () => {
     const slider = document.querySelector('.testimonial-slider');
     const prevBtn = document.querySelector('.testimonial-arrow.prev');
     const nextBtn = document.querySelector('.testimonial-arrow.next');
     const viewport = document.querySelector('.testimonial-slider-viewport');
-    let slides = slider ? slider.querySelectorAll('.testimonial') : [];
+    let slides = slider.querySelectorAll('.testimonial');
     let current = 0;
     let autoTimer = null;
     const AUTO_DELAY = 5000;
@@ -71,18 +140,18 @@ window.addEventListener('DOMContentLoaded', () => {
     function refreshSlides() {
       slides = slider.querySelectorAll('.testimonial');
       slides.forEach(s => s.style.flex = '0 0 100%');
-      showSlide(current);
+      updateSliderPosition();
     }
 
     function showSlide(index) {
       if (!slides.length) return;
       current = (index + slides.length) % slides.length;
+      updateSliderPosition();
+    }
 
-      slides.forEach((s, i) => {
-        s.style.opacity = i === current ? '1' : '0';
-        s.style.transform = i === current ? 'translateX(0)' : 'translateX(100%)';
-        s.style.position = i === current ? 'relative' : 'absolute';
-      });
+    function updateSliderPosition() {
+      const translate = -current * 100;
+      slider.style.transform = 'translateX(' + translate + '%)';
     }
 
     function nextSlide() { showSlide(current + 1); }
@@ -100,10 +169,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('resize', () => {
       slides.forEach(s => s.style.flex = '0 0 100%');
-      showSlide(current);
+      updateSliderPosition();
     });
 
     refreshSlides();
+    showSlide(0);
     startAuto();
 
     // ---------- Handle review form ----------
@@ -141,14 +211,14 @@ window.addEventListener('DOMContentLoaded', () => {
             const p = document.createElement('p');
             p.textContent = '“' + reviewText + '”';
             const h4 = document.createElement('h4');
-            h4.textContent = '— ' + name + (book && book !== 'author' ? ' — ' + book : '');
+            h4.textContent = '— ' + (name || 'Anonymous') + (book && book !== 'author' ? ' — ' + book : '');
             newSlide.appendChild(p);
             newSlide.appendChild(h4);
 
             slider.appendChild(newSlide);
             refreshSlides();
             current = slides.length - 1;
-            showSlide(current);
+            updateSliderPosition();
             resetAuto();
             form.reset();
           }
@@ -162,33 +232,38 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // ---------- Load existing reviews ----------
+    // ---------- Load existing reviews (Netlify submissions API) ----------
     async function loadReviews() {
-      try {
-        const res = await fetch("/.netlify/functions/get-reviews");
-        const reviews = await res.json();
+  try {
+    const res = await fetch("/.netlify/functions/get-reviews");
+    const reviews = await res.json();
 
-        slider.innerHTML = ""; // Clear existing slides
+    const slider = document.querySelector('.testimonial-slider');
+    slider.innerHTML = ""; // Clear initial testimonials
 
-        reviews.forEach(r => {
-          const div = document.createElement("div");
-          div.className = "testimonial";
-          const p = document.createElement("p");
-          p.textContent = `“${r.review}”`;
-          const h4 = document.createElement("h4");
-          h4.textContent = `— ${r.name}${r.book && r.book !== "author" ? " — " + r.book : ""}`;
-          div.appendChild(p);
-          div.appendChild(h4);
-          slider.appendChild(div);
-        });
+    reviews.forEach(r => {
+      const div = document.createElement("div");
+      div.className = "testimonial";
 
-        refreshSlides();
-      } catch (err) {
-        console.error("Failed to load reviews:", err);
-      }
-    }
+      const p = document.createElement("p");
+      p.textContent = `“${r.review}”`;
 
-    loadReviews();
+      const h4 = document.createElement("h4");
+      h4.textContent = `— ${r.name}${r.book && r.book !== "author" ? " — " + r.book : ""}`;
+
+      div.appendChild(p);
+      div.appendChild(h4);
+      slider.appendChild(div);
+    });
+
+    refreshSlides(); // Reuse your existing slider function
+  } catch (err) {
+    console.error("Failed to load reviews:", err);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadReviews);
+
+
   });
 })();
-// ==============================
