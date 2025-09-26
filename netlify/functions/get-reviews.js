@@ -1,10 +1,15 @@
+import fetch from 'node-fetch';
+
 export async function handler() {
-  const apiToken = process.env.NETLIFY_API_TOKEN;
+  const apiToken = process.env.NETLIFY_API_TOKEN; // set this in your Netlify dashboard
   const formId = '68d2282299db73000815a5f9';
   const apiUrl = `https://api.netlify.com/api/v1/forms/${formId}/submissions`;
 
   if (!apiToken) {
-    return { statusCode: 500, body: 'Missing NETLIFY_API_TOKEN' };
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Missing NETLIFY_API_TOKEN' })
+    };
   }
 
   try {
@@ -26,6 +31,6 @@ export async function handler() {
 
     return { statusCode: 200, body: JSON.stringify(reviews) };
   } catch (err) {
-    return { statusCode: 500, body: `Function error: ${err.message}` };
+    return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
   }
 }
