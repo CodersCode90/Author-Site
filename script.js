@@ -233,14 +233,19 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     // ---------- Load existing reviews (Netlify submissions API) ----------
-    async function loadReviews() {
+    // ---------- Load existing reviews (Netlify submissions API) ----------
+async function loadReviews() {
   try {
     const res = await fetch("/.netlify/functions/get-reviews");
     const reviews = await res.json();
 
     const slider = document.querySelector('.testimonial-slider');
-    slider.innerHTML = ""; // Clear initial testimonials
 
+    // ✅ Instead of wiping everything with innerHTML = "",
+    // remove only placeholder testimonials (if you used any).
+    slider.querySelectorAll(".testimonial.placeholder").forEach(el => el.remove());
+
+    // ✅ Add Netlify reviews without nuking the user-submitted ones
     reviews.forEach(r => {
       const div = document.createElement("div");
       div.className = "testimonial";
@@ -253,6 +258,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
       div.appendChild(p);
       div.appendChild(h4);
+
       slider.appendChild(div);
     });
 
@@ -261,6 +267,7 @@ window.addEventListener('DOMContentLoaded', () => {
     console.error("Failed to load reviews:", err);
   }
 }
+
 
 document.addEventListener("DOMContentLoaded", loadReviews);
 
