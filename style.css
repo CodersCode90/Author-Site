@@ -469,73 +469,17 @@ button:hover .cursor {
 #review-status { margin-top: 8px; color: #9fe7b3; }
 
 /* Testimonial slider */
-.testimonial-area { 
-  text-align: center; 
-}
+.testimonial-area { text-align: center; }
+.testimonial-area h2 { font-family:'Playfair Display', serif; color: #ff6f61; margin-bottom: 12px; }
+.testimonial-wrapper { display:flex; align-items:center; gap:12px; justify-content:center; }
+.testimonial-slider-viewport { width:100%; max-width:820px; overflow:hidden; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); box-shadow:0 8px 30px rgba(0,0,0,0.6); }
+.testimonial-slider { display:flex; transition: transform 600ms cubic-bezier(.22,.9,.3,1); will-change: transform; }
+.testimonial { flex:0 0 100%; padding:28px 36px; box-sizing:border-box; color:#fff; }
+.testimonial p { font-size:1.05rem; line-height:1.6; font-style:italic; color:#e6e6e6; margin:0 0 10px 0; }
+.testimonial h4 { margin:0; color:#ffd700; font-size:0.98rem; font-weight:700; }
 
-.testimonial-area h2 { 
-  font-family:'Playfair Display', serif; 
-  color: #ff6f61; 
-  margin-bottom: 12px; 
-}
-
-.testimonial-wrapper { 
-  display:flex; 
-  align-items:center; 
-  gap:12px; 
-  justify-content:center; 
-}
-/* TESTIMONIAL SLIDER */
-.testimonial-slider-viewport {
-  overflow: hidden;
-  position: relative;
-  margin-top: 24px;
-}
-
-.testimonial-slider {
-  display: flex;
-  transition: transform 0.5s ease;
-  flex-wrap: nowrap; /* prevent wrapping multiple testimonials side by side */
-}
-
-.testimonial {
-  flex: 0 0 100%; /* always take full width of viewport */
-  padding: 16px;
-  background: #1a1a1a;
-  border-radius: 12px;
-  margin: 0 12px;
-  box-shadow: 0 8px 20px rgba(255,111,97,0.4);
-  word-wrap: break-word; /* wrap long words */
-  white-space: normal;   /* allow text to wrap */
-}
-
-.testimonial p {
-  font-style: italic;
-  margin-bottom: 12px;
-  line-height: 1.6;
-}
-
-.testimonial h4 {
-  text-align: right;
-  font-weight: 600;
-  color: #ff6f61;
-}
-
-.testimonial-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  font-size: 2rem;
-  color: #ff6f61;
-  user-select: none;
-}
-
-.testimonial-arrow.prev { left: -40px; }
-.testimonial-arrow.next { right: -40px; }
-
-/* Remove previous desktop overrides — text now wraps properly on all screen sizes */
-
+.testimonial-arrow { background:transparent; border:2px solid rgba(255,255,255,0.08); color:#fff; padding:10px 14px; border-radius:10px; cursor:pointer; font-size:22px; }
+.testimonial-arrow:hover { background:rgba(255,255,255,0.03); transform:translateY(-2px); }
 
 /* Responsive */
 @media (min-width:900px) {
