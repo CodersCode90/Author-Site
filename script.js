@@ -198,7 +198,7 @@ window.addEventListener('DOMContentLoaded', () => {
           if (res.ok) {
             status.textContent = 'Thanks — your review was sent! It will appear here after approval.';
           } else {
-            status.textContent = 'Submission received.';
+            status.textContent = 'Submission received (might be blocked).';
           }
 
           const name = (fd.get('name') || 'Anonymous').trim();
@@ -232,14 +232,14 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-async function loadReviews() {
+    // ---------- Load existing reviews (Netlify submissions API) ----------
+    async function loadReviews() {
   try {
     const res = await fetch("/.netlify/functions/get-reviews");
     const reviews = await res.json();
 
-    const slider = document.querySelector('.testimonial-slider');
+    if (!Array.isArray(reviews) || reviews.length === 0) return;
 
-    // ✅ Add Netlify reviews without nuking the user-submitted ones
     reviews.forEach(r => {
       const div = document.createElement("div");
       div.className = "testimonial";
@@ -252,7 +252,6 @@ async function loadReviews() {
 
       div.appendChild(p);
       div.appendChild(h4);
-
       slider.appendChild(div);
     });
 
@@ -262,8 +261,7 @@ async function loadReviews() {
   }
 }
 
-
-  loadReviews();
+document.addEventListener("DOMContentLoaded", loadReviews);
 
 
   });
