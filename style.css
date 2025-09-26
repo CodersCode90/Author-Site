@@ -486,14 +486,14 @@ button:hover .cursor {
 
 
 .testimonial p { 
-  font-size: 1.05rem; 
+  font-size: .85rem; 
   line-height: 1.6; 
   font-style: italic; 
   color: #e6e6e6; 
   margin: 0 0 10px 0; 
 }
 
-.testimonial h4 { 
+.testimonial h2 { 
   margin:0; 
   color: #00eeff;
   font-size: 0.98rem;
