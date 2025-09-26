@@ -232,8 +232,6 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // ---------- Load existing reviews (Netlify submissions API) ----------
-    // ---------- Load existing reviews (Netlify submissions API) ----------
 async function loadReviews() {
   try {
     const res = await fetch("/.netlify/functions/get-reviews");
