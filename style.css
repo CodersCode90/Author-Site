@@ -519,8 +519,9 @@ button:hover .cursor {
   overflow: hidden;
   position: relative;
   margin-top: 24px;
-  height: auto; /* was fixed */
+  max-height: none; /* remove fixed limit */
 }
+
 
 .testimonial-slider {
   display: flex;
@@ -529,7 +530,7 @@ button:hover .cursor {
 }
 
 .testimonial {
-  flex: 0 0 100%;
+  flex: 0 0 100%; 
   box-sizing: border-box;
   padding: 16px;
   background: #1a1a1a;
@@ -537,9 +538,10 @@ button:hover .cursor {
   box-shadow: 0 8px 20px rgba(255,111,97,0.4);
   white-space: normal;
   word-wrap: break-word;
-  max-height: 300px; /* or whatever fits your design */
-  overflow-y: auto;
+  max-height: none; /* remove fixed limit */
+  overflow: visible; /* no scrollbar needed */
 }
+
 
 .testimonial-arrow.prev { 
   left: -40px; 
