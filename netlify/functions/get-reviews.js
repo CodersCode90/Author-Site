@@ -1,36 +1,36 @@
+import fetch from 'node-fetch';
+
 export async function handler() {
-  const apiToken = process.env.NETLIFY__API_TOKEN; // make sure this is set in Netlify env vars
-  const formId = "68d2282299db73000815a5f9"; // replace with your form's exact Netlify ID
+  const apiToken = process.env.NETLIFY_API_TOKEN; // set this in your Netlify dashboard
+  const formId = '68d2282299db73000815a5f9';
+  const apiUrl = `https://api.netlify.com/api/v1/forms/${formId}/submissions`;
+
+  if (!apiToken) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Missing NETLIFY_API_TOKEN' })
+    };
+  }
 
   try {
-    const res = await fetch(`https://api.netlify.com/api/v1/forms/${formId}/submissions`, {
-      headers: {
-        "Authorization": `Bearer ${apiToken}`,
-      },
+    const res = await fetch(apiUrl, {
+      headers: { Authorization: `Bearer ${apiToken}` }
     });
 
     if (!res.ok) {
-      throw new Error(`Failed to fetch: ${res.status}`);
+      return { statusCode: res.status, body: await res.text() };
     }
 
     const submissions = await res.json();
 
-    // Map submissions to the format your slider expects
-    const reviews = submissions.map((s) => ({
-      name: s.data.name || "Anonymous",
-      book: s.data.book || "author",
-      review: s.data.review || "",
+    const reviews = submissions.map(sub => ({
+      name: (sub.data && sub.data.name) || 'Anonymous',
+      book: (sub.data && sub.data.book) || '',
+      review: (sub.data && sub.data.review) || ''
     }));
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify(reviews),
-    };
+    return { statusCode: 200, body: JSON.stringify(reviews) };
   } catch (err) {
-    console.error("Error fetching reviews:", err);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: err.message }),
-    };
+    return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
   }
 }
