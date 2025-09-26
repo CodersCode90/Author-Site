@@ -127,113 +127,143 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 (function(){
-  document.addEventListener("DOMContentLoaded", () => {
-  const slider = document.querySelector('.testimonial-slider');
-  const prevBtn = document.querySelector('.testimonial-arrow.prev');
-  const nextBtn = document.querySelector('.testimonial-arrow.next');
-  const viewport = document.querySelector('.testimonial-slider-viewport');
-  const form = document.querySelector('form[name="review-form"]');
-  const status = document.getElementById('review-status');
-  let slides = slider.querySelectorAll('.testimonial');
-  let current = 0;
-  let autoTimer = null;
-  const AUTO_DELAY = 5000;
+  document.addEventListener('DOMContentLoaded', () => {
+    const slider = document.querySelector('.testimonial-slider');
+    const prevBtn = document.querySelector('.testimonial-arrow.prev');
+    const nextBtn = document.querySelector('.testimonial-arrow.next');
+    const viewport = document.querySelector('.testimonial-slider-viewport');
+    let slides = slider.querySelectorAll('.testimonial');
+    let current = 0;
+    let autoTimer = null;
+    const AUTO_DELAY = 5000;
 
-  function refreshSlides() {
-    slides = slider.querySelectorAll('.testimonial'); // <— re-query after changes
-    slides.forEach(s => s.style.flex = '0 0 100%');
-    updateSliderPosition();
-  }
+    function refreshSlides() {
+      slides = slider.querySelectorAll('.testimonial');
+      slides.forEach(s => s.style.flex = '0 0 100%');
+      updateSliderPosition();
+    }
 
-  function showSlide(index) {
-    if (!slides.length) return;
-    current = (index + slides.length) % slides.length;
-    updateSliderPosition();
-  }
+    function showSlide(index) {
+      if (!slides.length) return;
+      current = (index + slides.length) % slides.length;
+      updateSliderPosition();
+    }
 
-  function updateSliderPosition() {
-    slider.style.transform = `translateX(${-current * 100}%)`;
-  }
+    function updateSliderPosition() {
+      const translate = -current * 100;
+      slider.style.transform = 'translateX(' + translate + '%)';
+    }
 
-  function nextSlide() { showSlide(current + 1); }
-  function prevSlide() { showSlide(current - 1); }
-  function startAuto() { stopAuto(); autoTimer = setInterval(nextSlide, AUTO_DELAY); }
-  function stopAuto() { if (autoTimer) clearInterval(autoTimer); }
-  function resetAuto() { stopAuto(); startAuto(); }
+    function nextSlide() { showSlide(current + 1); }
+    function prevSlide() { showSlide(current - 1); }
 
-  if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); resetAuto(); });
-  if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); resetAuto(); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); resetAuto(); });
+    if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); resetAuto(); });
 
-  viewport.addEventListener('mouseenter', stopAuto);
-  viewport.addEventListener('mouseleave', startAuto);
+    function startAuto() { stopAuto(); autoTimer = setInterval(nextSlide, AUTO_DELAY); }
+    function stopAuto() { if (autoTimer) clearInterval(autoTimer); }
+    function resetAuto() { stopAuto(); startAuto(); }
 
-  window.addEventListener('resize', refreshSlides);
+    viewport.addEventListener('mouseenter', stopAuto);
+    viewport.addEventListener('mouseleave', startAuto);
 
-  function addSlide(name, reviewText, book) {
-    if (!reviewText) return;
-    const div = document.createElement("div");
-    div.className = "testimonial";
-
-    const p = document.createElement("p");
-    p.textContent = `“${reviewText}”`;
-    const h4 = document.createElement("h4");
-    h4.textContent = `— ${name || 'Anonymous'}${book && book !== 'author' ? " — " + book : ""}`;
-
-    div.appendChild(p);
-    div.appendChild(h4);
-    slider.appendChild(div);
+    window.addEventListener('resize', () => {
+      slides.forEach(s => s.style.flex = '0 0 100%');
+      updateSliderPosition();
+    });
 
     refreshSlides();
-    current = slides.length - 1; // <— point to the new slide
-    updateSliderPosition();
-  }
+    showSlide(0);
+    startAuto();
 
-  async function loadReviews() {
-    try {
-      const res = await fetch("/.netlify/functions/get-reviews");
-      if (!res.ok) throw new Error('Failed to fetch reviews');
-      const reviews = await res.json();
-      reviews.forEach(r => addSlide(r.name, r.review, r.book));
-    } catch (err) {
-      console.error("Failed to load reviews:", err);
+    // ---------- Handle review form ----------
+    const form = document.querySelector('form[name="review-form"]');
+    const status = document.getElementById('review-status');
+
+    function encodeFormData(formData) { return new URLSearchParams(formData).toString(); }
+
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        status.textContent = 'Submitting...';
+        const fd = new FormData(form);
+
+        try {
+          const res = await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: encodeFormData(fd)
+          });
+
+          if (res.ok) {
+            status.textContent = 'Thanks — your review was sent! It will appear here after approval.';
+          } else {
+            status.textContent = 'Submission received (might be blocked).';
+          }
+
+          const name = (fd.get('name') || 'Anonymous').trim();
+          const book = (fd.get('book') || '').trim();
+          const reviewText = (fd.get('review') || '').trim();
+
+          if (reviewText) {
+            const newSlide = document.createElement('div');
+            newSlide.className = 'testimonial';
+            const p = document.createElement('p');
+            p.textContent = '“' + reviewText + '”';
+            const h4 = document.createElement('h4');
+            h4.textContent = '— ' + (name || 'Anonymous') + (book && book !== 'author' ? ' — ' + book : '');
+            newSlide.appendChild(p);
+            newSlide.appendChild(h4);
+
+            slider.appendChild(newSlide);
+            refreshSlides();
+            current = slides.length - 1;
+            updateSliderPosition();
+            resetAuto();
+            form.reset();
+          }
+
+        } catch (err) {
+          console.error('Form submit error:', err);
+          status.textContent = 'Submission failed — please try again later.';
+        }
+
+        setTimeout(() => { status.textContent = ''; }, 6000);
+      });
     }
-  }
 
-  loadReviews();
-  startAuto();
+    // ---------- Load existing reviews (Netlify submissions API) ----------
+    async function loadReviews() {
+  try {
+    const res = await fetch("/.netlify/functions/get-reviews");
+    const reviews = await res.json();
 
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      status.textContent = 'Submitting...';
-      const fd = new FormData(form);
+    const slider = document.querySelector('.testimonial-slider');
+     // Clear initial testimonials
 
-      try {
-        const res = await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(fd).toString()
-        });
+    reviews.forEach(r => {
+      const div = document.createElement("div");
+      div.className = "testimonial";
 
-        status.textContent = res.ok
-          ? 'Thanks — your review was sent! It will appear here after approval.'
-          : 'Submission received (might be blocked).';
+      const p = document.createElement("p");
+      p.textContent = `“${r.review}”`;
 
-        const name = (fd.get('name') || 'Anonymous').trim();
-        const book = (fd.get('book') || '').trim();
-        const reviewText = (fd.get('review') || '').trim();
-        addSlide(name, reviewText, book);
+      const h4 = document.createElement("h4");
+      h4.textContent = `— ${r.name}${r.book && r.book !== "author" ? " — " + r.book : ""}`;
 
-        form.reset();
-        resetAuto();
-      } catch (err) {
-        console.error(err);
-        status.textContent = 'Submission failed — please try again later.';
-      }
-
-      setTimeout(() => { status.textContent = ''; }, 6000);
+      div.appendChild(p);
+      div.appendChild(h4);
+      slider.appendChild(div);
     });
-  }
-});
 
+    refreshSlides(); // Reuse your existing slider function
+  } catch (err) {
+    console.error("Failed to load reviews:", err);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadReviews);
+
+
+  });
 })();
