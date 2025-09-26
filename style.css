@@ -482,26 +482,51 @@ button:hover .cursor {
 
 .testimonial-slider-viewport {
   overflow: hidden;
-  width: 100%;
+  position: relative;
+  margin-top: 24px;
 }
 
 .testimonial-slider {
-  display: flex;          /* horizontal layout */
-  flex-wrap: nowrap;      /* no stacking */
-  gap: 20px;              /* space between reviews */
+  display: flex;
   transition: transform 0.5s ease;
+  flex-wrap: nowrap; /* prevent wrapping multiple testimonials side by side */
 }
 
 .testimonial {
-  flex: 0 0 300px;       /* fixed width per testimonial, adjust as needed */
-  min-width: 250px;      /* prevents collapsing on small screens */
-  box-sizing: border-box;
-  padding: 20px;
-  background-color: #fff; /* or your slider background */
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  white-space: normal;   /* ensures text wraps */
+  flex: 0 0 100%; /* always take full width of viewport */
+  padding: 16px;
+  background: #1a1a1a;
+  border-radius: 12px;
+  margin: 0 12px;
+  box-shadow: 0 8px 20px rgba(255,111,97,0.4);
+  word-wrap: break-word; /* wrap long words */
+  white-space: normal;   /* allow text to wrap */
 }
+
+.testimonial p {
+  font-style: italic;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.testimonial h4 {
+  text-align: right;
+  font-weight: 600;
+  color: #ff6f61;
+}
+
+.testimonial-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 2rem;
+  color: #ff6f61;
+  user-select: none;
+}
+
+.testimonial-arrow.prev { left: -40px; }
+.testimonial-arrow.next { right: -40px; }
 
 @media (max-width: 768px) {
   .testimonial {
