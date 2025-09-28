@@ -241,7 +241,7 @@
           if (res.ok) {
             status.textContent = 'Thanks — your review was sent! It will appear here after approval.';
           } else {
-            status.textContent = 'Submission received (might be blocked).';
+            status.textContent = 'Submission received.';
           }
 
           const name = (fd.get('name') || 'Anonymous').trim();
@@ -277,8 +277,8 @@
 
     // ---------- Load approved Netlify reviews ----------
     async function loadApprovedReviews() {
-      const apiToken = 'YOUR_NETLIFY_PERSONAL_ACCESS_TOKEN';
-      const formId = 'review-form';
+      const apiToken = process.env.NETLIFY_API_TOKEN;
+      const formId = '68d2282299db73000815a5f9';
       const apiUrl = `https://api.netlify.com/api/v1/forms/${formId}/submissions`;
 
       try {
