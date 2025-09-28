@@ -234,35 +234,34 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // ---------- Load existing reviews (Netlify submissions API) ----------
     async function loadReviews() {
-  try {
-    const res = await fetch("/.netlify/functions/get-reviews");
-    const reviews = await res.json();
+      try {
+        const res = await fetch("/.netlify/functions/get-reviews");
+        const reviews = await res.json();
 
-    const slider = document.querySelector('.testimonial-slider');
-     // Clear initial testimonials
+        const slider = document.querySelector('.testimonial-slider');
 
-    reviews.forEach(r => {
-      const div = document.createElement("div");
-      div.className = "testimonial";
+        reviews.forEach(r => {
+          const div = document.createElement("div");
+          div.className = "testimonial";
 
-      const p = document.createElement("p");
-      p.textContent = `“${r.review}”`;
+          const p = document.createElement("p");
+          p.textContent = `“${r.review}”`;
 
-      const h4 = document.createElement("h4");
-      h4.textContent = `— ${r.name}${r.book && r.book !== "author" ? " — " + r.book : ""}`;
+          const h4 = document.createElement("h4");
+          h4.textContent = `— ${r.name}${r.book && r.book !== "author" ? " — " + r.book : ""}`;
 
-      div.appendChild(p);
-      div.appendChild(h4);
-      slider.appendChild(div);
-    });
+          div.appendChild(p);
+          div.appendChild(h4);
+          slider.appendChild(div);
+      });
 
-    refreshSlides(); // Reuse your existing slider function
-  } catch (err) {
-    console.error("Failed to load reviews:", err);
+      refreshSlides(); // Reuse your existing slider function
+    } catch (err) {
+      console.error("Failed to load reviews:", err);
+    }
   }
-}
 
-document.addEventListener("DOMContentLoaded", loadReviews);
+  document.addEventListener("DOMContentLoaded", loadReviews);
 
 
   });
