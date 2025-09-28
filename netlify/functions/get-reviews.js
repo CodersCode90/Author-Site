@@ -1,35 +1,37 @@
 import fetch from "node-fetch";
 
 export async function handler() {
-  const apiToken = process.env.NETLIFY_API_TOKEN; // needs setting in Netlify dashboard
-  const formId = '68d2282299db73000815a5f9'; // this is your form's name
-  const apiUrl = `https://api.netlify.com/api/v1/forms/${formId}/submissions`;
+  const token = process.env.NETLIFY_API_TOKEN; // Set in Netlify dashboard
+  const siteId = process.env.NETLIFY_SITE_ID;   // Set in Netlify dashboard
 
-  if (!apiToken) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'Missing NETLIFY_API_TOKEN' })
-    };
-  }
+  const url = `https://api.netlify.com/api/v1/sites/${siteId}/forms/review-form/submissions?per_page=100`;
 
   try {
-    const res = await fetch(apiUrl, {
-      headers: { Authorization: `Bearer ${apiToken}` }
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
-    if (!res.ok) {
-      return { statusCode: res.status, body: await res.text() };
+    if (!response.ok) {
+      return { statusCode: response.status, body: "Failed to fetch reviews" };
     }
 
-    const submissions = await res.json();
+    const submissions = await response.json();
 
-    const reviews = submissions.map(sub => ({
-      name: (sub.data && sub.data.name) || 'Anonymous',
-      book: (sub.data && sub.data.book) || '',
-      review: (sub.data && sub.data.review) || ''
-    }));
+    // Filter only approved/processed submissions
+    const approved = submissions
+      .filter(sub => sub.status === "submitted" || sub.status === "approved")
+      .map(sub => ({
+        name: sub.data.name || "Anonymous",
+        book: sub.data.book || "",
+        review: sub.data.review || "",
+      }));
 
-    return { statusCode: 200, body: JSON.stringify(reviews) };
+    return {
+      statusCode: 200,
+      body: JSON.stringify(approved),
+    };
   } catch (err) {
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
   }
