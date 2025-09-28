@@ -720,37 +720,68 @@ html {
 /* ===============================
    REVIEWS & TESTIMONIALS MOBILE FRIENDLY
    =============================== */
+/* ===============================
+   TESTIMONIALS MOBILE STYLING
+   =============================== */
 @media (max-width: 768px) {
 
-  /* Testimonial slider adjustments */
-  .testimonial-area h2 {
-    font-size: 1.6rem;
-    margin-bottom: 20px;
-  }
-
   .testimonial-slider-viewport {
-    overflow-x: hidden;
+    overflow: hidden; /* keep only one testimonial visible */
+    width: 100%;
   }
 
   .testimonial-slider {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    transition: transform 0.5s ease;
   }
 
   .testimonial {
-    position: relative;
-    transform: translateX(0);
+    flex: 0 0 100%; /* show one at a time */
+    max-width: 100%;
     opacity: 1;
-    width: 100%;
-    margin-bottom: 20px;
+    transform: translateX(0) scale(1);
+    margin-bottom: 0;
+    text-align: center;
   }
 
   .testimonial p {
     font-size: 1rem;
   }
 
-  .testimonial h3 {
-    font-size: 0.9rem;
+  .testimonial h4 {
+    font-size: 1rem;
   }
+
+  /* Slider buttons */
+  .slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0.5rem 0.8rem;
+    font-size: 1.4rem;
+    border-radius: 50%;
+    z-index: 10;
+    background: #ff6f61;
+    color: #fff;
+    box-shadow: 0 0 10px #ff6f61;
+  }
+
+  .slider-btn.prev {
+    left: 10px;
+  }
+
+  .slider-btn.next {
+    right: 10px;
+  }
+
+  /* Ensure buttons are tappable */
+  .slider-btn:hover {
+    transform: translateY(-50%) scale(1.2);
+    box-shadow: 0 0 15px #ff6f61;
+  }
+}
+
 
   .testimonial-nav {
     flex-direction: column;
@@ -778,14 +809,4 @@ html {
   .cursor-trail {
     display: none !important;
   }
-}
-
-/* Responsive */
-@media (min-width:900px) {
-  .testimonial-area { grid-column:2/3; }
-  .testimonial-slider-viewport { height: 180px; }
-}
-@media (max-width:899px) {
-  .testimonial-wrapper { flex-direction:column-reverse; }
-}
 
