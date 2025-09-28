@@ -128,52 +128,75 @@ window.addEventListener('DOMContentLoaded', () => {
 
 (function(){
   document.addEventListener('DOMContentLoaded', () => {
-    const slider = document.querySelector('.testimonial-slider');
-    const prevBtn = document.querySelector('.testimonial-arrow.prev');
-    const nextBtn = document.querySelector('.testimonial-arrow.next');
-    const viewport = document.querySelector('.testimonial-slider-viewport');
-    let slides = slider.querySelectorAll('.testimonial');
-    let current = 0;
-    let autoTimer = null;
-    const AUTO_DELAY = 5000;
+  const slider = document.querySelector('.testimonial-slider');
+  const testimonials = slider.querySelectorAll('.testimonial');
+  const prevBtn = document.querySelector('.slider-btn.prev');
+  const nextBtn = document.querySelector('.slider-btn.next');
+  let current = 0;
+  const AUTO_DELAY = 5000;
+  let autoTimer;
 
-    function refreshSlides() {
-      slides = slider.querySelectorAll('.testimonial');
-      slides.forEach(s => s.style.flex = '0 0 100%');
-      updateSliderPosition();
-    }
-
-    function showSlide(index) {
-      if (!slides.length) return;
-      current = (index + slides.length) % slides.length;
-      updateSliderPosition();
-    }
-
-    function updateSliderPosition() {
-      const translate = -current * 100;
-      slider.style.transform = 'translateX(' + translate + '%)';
-    }
-
-    function nextSlide() { showSlide(current + 1); }
-    function prevSlide() { showSlide(current - 1); }
-
-    if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); resetAuto(); });
-    if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); resetAuto(); });
-
-    function startAuto() { stopAuto(); autoTimer = setInterval(nextSlide, AUTO_DELAY); }
-    function stopAuto() { if (autoTimer) clearInterval(autoTimer); }
-    function resetAuto() { stopAuto(); startAuto(); }
-
-    viewport.addEventListener('mouseenter', stopAuto);
-    viewport.addEventListener('mouseleave', startAuto);
-
-    window.addEventListener('resize', () => {
-      slides.forEach(s => s.style.flex = '0 0 100%');
-      updateSliderPosition();
+  function updateSlider() {
+    testimonials.forEach((t, i) => {
+      t.classList.remove('active');
+      if (i === current) t.classList.add('active');
     });
 
-    refreshSlides();
-    showSlide(0);
+    const offset = -(current * 70); // adjust to match .testimonial.active width
+    slider.style.transform = `translateX(${offset}%)`;
+  }
+
+  function nextSlide() {
+    current = (current + 1) % testimonials.length;
+    updateSlider();
+  }
+
+  function prevSlide() {
+    current = (current - 1 + testimonials.length) % testimonials.length;
+    updateSlider();
+  }
+
+  function startAuto() {
+    autoTimer = setInterval(nextSlide, AUTO_DELAY);
+  }
+
+  function resetAuto() {
+    clearInterval(autoTimer);
     startAuto();
+  }
+
+  if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); resetAuto(); });
+  if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); resetAuto(); });
+
+  updateSlider();
+  startAuto();
+});
+
+  const testimonialWidth = testimonials[0].offsetWidth + 16; // 16px gap
+  function updateSlider() {
+    testimonials.forEach((t, i) => {
+      t.classList.remove('active', 'prev', 'next');
+      if (i === current) t.classList.add('active');
+      if (i === (current - 1 + testimonials.length) % testimonials.length) t.classList.add('prev');
+      if (i === (current + 1) % testimonials.length) t.classList.add('next');
+   });
+   slider.style.transform = `translateX(-${current * testimonialWidth}px)`;
+  }
+
+
+function updateSlider() {
+  testimonials.forEach((t, i) => {
+    t.classList.remove('active');
+    if (i === current) t.classList.add('active');
   });
+
+  // Dynamically set viewport height
+  const viewport = document.querySelector('.testimonial-slider-viewport');
+  viewport.style.height = testimonials[current].offsetHeight + 'px';
+
+  const offset = -(current * 70); // keeps slider moving
+  slider.style.transform = `translateX(${offset}%)`;
+}
+
+
 })();
