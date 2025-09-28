@@ -484,80 +484,6 @@ button:hover .cursor {
 }
 
 
-/* ===============================
-   TESTIMONIALS MOBILE STYLING
-   =============================== */
-@media (max-width: 768px) {
-
-  .testimonial-slider-viewport {
-    overflow: hidden; /* keep only one testimonial visible */
-    width: 100%;
-  }
-
-  .testimonial-slider {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    transition: transform 0.5s ease;
-  }
-
-  .testimonial {
-    flex: 0 0 100%; /* show one at a time */
-    max-width: 100%;
-    opacity: 1;
-    transform: translateX(0) scale(1);
-    margin-bottom: 0;
-    text-align: center;
-  }
-
-  .testimonial p {
-    font-size: 1rem;
-  }
-
-  .testimonial h4 {
-    font-size: 1rem;
-  }
-
-  /* Slider buttons */
-  .slider-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 0.5rem 0.8rem;
-    font-size: 1.4rem;
-    border-radius: 50%;
-    z-index: 10;
-    background: #ff6f61;
-    color: #fff;
-    box-shadow: 0 0 10px #ff6f61;
-  }
-
-  .slider-btn.prev {
-    left: 10px;
-  }
-
-  .slider-btn.next {
-    right: 10px;
-  }
-
-  /* Ensure buttons are tappable */
-  .slider-btn:hover {
-    transform: translateY(-50%) scale(1.2);
-    box-shadow: 0 0 15px #ff6f61;
-  }
-}
-
-
-/* Responsive */
-@media (min-width:900px) {
-  .testimonial-area { grid-column:2/3; }
-  .testimonial-slider-viewport { height: 180px; }
-}
-
-@media (max-width:899px) {
-  .testimonial-wrapper { flex-direction:column-reverse; }
-}
-
-
 .about-hero .particles {
   position: absolute;
   top: 0; left: 0;
@@ -822,7 +748,7 @@ html {
     font-size: 1rem;
   }
 
-  .testimonial h4 {
+  .testimonial h3 {
     font-size: 0.9rem;
   }
 
@@ -835,6 +761,8 @@ html {
     font-size: 1rem;
     padding: 8px 12px;
   }
+
+  
 
   /* Remove custom cursor on mobile */
   body,
