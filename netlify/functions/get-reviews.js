@@ -1,35 +1,35 @@
-export async function handler() {
-  const token = process.env.NETLIFY_API_TOKEN; // Set in Netlify dashboard
-  const siteId = process.env.NETLIFY_SITE_ID;   // Set in Netlify dashboard
+import fetch from "node-fetch";
 
-  const url = `https://api.netlify.com/api/v1/sites/${siteId}/forms/review-form/submissions?per_page=100`;
+export async function handler() {
+  const apiToken = process.env.NETLIFY_API_TOKEN; // needs setting in Netlify dashboard
+  const formId = '68d2282299db73000815a5f9'; // this is your form's name
+  const apiUrl = `https://api.netlify.com/api/v1/forms/${formId}/submissions`;
+
+  if (!apiToken) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Missing NETLIFY_API_TOKEN' })
+    };
+  }
 
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    const res = await fetch(apiUrl, {
+      headers: { Authorization: `Bearer ${apiToken}` }
     });
 
-    if (!response.ok) {
-      return { statusCode: response.status, body: "Failed to fetch reviews" };
+    if (!res.ok) {
+      return { statusCode: res.status, body: await res.text() };
     }
 
-    const submissions = await response.json();
+    const submissions = await res.json();
 
-    // Filter only approved/processed submissions
-    const approved = submissions
-      .filter(sub => sub.status === "submitted" || sub.status === "approved")
-      .map(sub => ({
-        name: sub.data.name || "Anonymous",
-        book: sub.data.book || "",
-        review: sub.data.review || "",
-      }));
+    const reviews = submissions.map(sub => ({
+      name: (sub.data && sub.data.name) || 'Anonymous',
+      book: (sub.data && sub.data.book) || '',
+      review: (sub.data && sub.data.review) || ''
+    }));
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify(approved),
-    };
+    return { statusCode: 200, body: JSON.stringify(reviews) };
   } catch (err) {
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
   }
