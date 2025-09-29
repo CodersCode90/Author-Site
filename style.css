@@ -419,3 +419,59 @@ h1, h2, h3 {
 }
 
 @keyframes fadeTrail { to { opacity:0; transform:translate(-50%,-50%) scale(0); } }
+<<<<<<< HEAD
+=======
+
+/* ===============================
+   MEDIA QUERIES
+   =============================== */
+@media (max-width: 768px) {
+  .testimonial-wrapper {
+    display: block; /* stack wrapper vertically but keep slider working */
+  }
+
+  .testimonial-slider-viewport {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    margin: 0 auto;
+  }
+
+  .testimonial-slider {
+    display: flex; /* horizontal slider */
+    transition: transform 0.45s cubic-bezier(.22,.9,.3,1);
+    width: 100%;
+  }
+
+  .testimonial {
+    flex: 0 0 100%; /* one testimonial per view */
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    opacity: 1; /* make sure visible */
+    position: relative; /* prevent vertical stacking */
+  }
+
+  /* Keep slider buttons below slider */
+  .slider-controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .slider-btn {
+    font-size: 1.4rem;
+    padding: 8px 12px;
+  }
+}
+
+/* Ensure custom cursor stays on all buttons */
+button, a, input, textarea {
+  cursor: none !important;
+}
+
+@media (min-width: 900px) {
+  .testimonial-area { grid-column: 2/3; }
+}
+>>>>>>> 697758624fe84c08e07e29ebac3244879de56331
