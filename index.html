@@ -117,6 +117,37 @@
             <button class="slider-btn next">&rarr;</button>
           </div>
 
+          <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const slider = document.querySelector(".testimonial-slider");
+    const testimonials = document.querySelectorAll(".testimonial");
+    const prevBtn = document.querySelector(".slider-btn.prev");
+    const nextBtn = document.querySelector(".slider-btn.next");
+    
+    let currentIndex = 0;
+    const total = testimonials.length;
+
+    function updateSlider() {
+      const offset = -currentIndex * 100;
+      slider.style.transform = `translateX(${offset}%)`;
+    }
+
+    prevBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + total) % total;
+      updateSlider();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % total;
+      updateSlider();
+    });
+
+    // Initialize
+    updateSlider();
+  });
+</script>
+
+
       </div>
     </div>
   </div>
