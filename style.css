@@ -423,3 +423,71 @@ box-shadow: 0 0 25px #ff6f61;
 body, button, a, input, textarea {
 cursor: none !important;
 }
+
+/* ===============================
+   MOBILE RESPONSIVE SNIPPET
+   =============================== */
+@media (max-width: 1024px) {
+  .hero h1 { font-size: 3rem; }
+  .hero .tagline, .about-hero .tagline { font-size: 1.3rem; }
+  .about-hero h1 { font-size: 2.5rem; }
+  .hero .hero-cover { width: 180px; }
+
+  .author-intro, .author-bio {
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .author-shape, .author-bio-shape { width: 200px; height: 200px; top: -30px; left: -30px; }
+  .author-photo { width: 180px; height: 180px; }
+  .author-photo-large { width: 200px; height: 200px; }
+  .author-text, .bio-text { max-width: 100%; text-align: center; }
+
+  .book-grid, .book-grid-mini { gap: 1rem; }
+  .book-card { transform: rotate(0deg); }
+
+  .testimonial-section { padding: 3rem 1rem; }
+  .testimonial { padding: 2rem; margin: 0 0.25rem; }
+  .testimonial-section h2 { font-size: 2rem; }
+  .testimonial p { font-size: 0.95rem; }
+  .testimonial h3 { font-size: 0.95rem; }
+}
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2.2rem; }
+  .hero .tagline, .about-hero .tagline { font-size: 1.1rem; }
+  .about-hero h1 { font-size: 2rem; }
+  .hero .hero-cover { width: 140px; }
+
+  .author-intro, .author-bio { padding: 2rem 1rem; gap: 1rem; }
+  .author-photo, .author-photo-large { width: 150px; height: 150px; }
+  .author-shape, .author-bio-shape { width: 150px; height: 150px; top: -20px; left: -20px; }
+
+  .book-grid, .book-grid-mini { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.8rem; }
+
+  .testimonial-section h2 { font-size: 1.8rem; }
+  .testimonial { padding: 1.5rem; margin: 0 0.2rem; }
+  .testimonial p { font-size: 0.9rem; }
+  .testimonial h3 { font-size: 0.85rem; }
+}
+
+@media (max-width: 480px) {
+  .hero h1 { font-size: 1.8rem; }
+  .hero .tagline, .about-hero .tagline { font-size: 1rem; }
+  .about-hero h1 { font-size: 1.6rem; }
+  .hero .hero-cover { width: 120px; }
+
+  .author-intro, .author-bio { padding: 1.5rem 1rem; }
+  .author-photo, .author-photo-large { width: 120px; height: 120px; }
+  .author-shape, .author-bio-shape { width: 120px; height: 120px; top: -15px; left: -15px; }
+
+  .book-grid, .book-grid-mini { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem; }
+
+  .testimonial-section { padding: 2rem 0.5rem; }
+  .testimonial-section h2 { font-size: 1.5rem; }
+  .testimonial { padding: 1rem; margin: 0 0.1rem; }
+  .testimonial p { font-size: 0.85rem; }
+  .testimonial h3 { font-size: 0.8rem; }
+}
