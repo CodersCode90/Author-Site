@@ -424,32 +424,33 @@ h1, h2, h3 {
    MEDIA QUERIES
    =============================== */
 @media (max-width: 768px) {
-  .testimonial-slider-viewport {
-    overflow: hidden;
-    width: 100%;
+  .testimonial-wrapper {
+    display: block; /* stack wrapper vertically but keep slider working */
   }
 
-  /* Keep horizontal sliding but ensure only one item is visible and not stacked
-     Buttons should be positioned beneath the viewport on mobile */
+  .testimonial-slider-viewport {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    margin: 0 auto;
+  }
+
   .testimonial-slider {
-    display: flex;
+    display: flex; /* horizontal slider */
     transition: transform 0.45s cubic-bezier(.22,.9,.3,1);
-    will-change: transform;
     width: 100%;
   }
 
   .testimonial {
-    flex: 0 0 100%; /* each testimonial takes full viewport width */
+    flex: 0 0 100%; /* one testimonial per view */
     width: 100%;
     box-sizing: border-box;
     margin: 0;
-    position: relative; /* prevent absolute stacking behavior */
-    opacity: 1; /* ensure visible when within viewport */
+    opacity: 1; /* make sure visible */
+    position: relative; /* prevent vertical stacking */
   }
 
-  /* Place the controls below the slider on mobile */
-  .testimonial-wrapper { display:flex; flex-direction:column; gap:12px; align-items:center; }
-
+  /* Keep slider buttons below slider */
   .slider-controls {
     display: flex;
     justify-content: center;
@@ -457,7 +458,15 @@ h1, h2, h3 {
     margin-top: 12px;
   }
 
-  .slider-btn { font-size: 1.4rem; padding: 8px 12px; }
+  .slider-btn {
+    font-size: 1.4rem;
+    padding: 8px 12px;
+  }
+}
+
+/* Ensure custom cursor stays on all buttons */
+button, a, input, textarea {
+  cursor: none !important;
 }
 
 @media (min-width: 900px) {
