@@ -1,10 +1,14 @@
 // ==============================
-// CUSTOM CURSOR + TRAIL (WORKS ON ALL PAGES)
+// CUSTOM CURSOR + TRAIL (DESKTOP ONLY)
 // ==============================
 const cursor = document.querySelector('.cursor');
 const trailContainer = document.querySelector('.cursor-trail-container');
 
-if (cursor && trailContainer) {
+function isDesktop() {
+  return window.innerWidth > 768;
+}
+
+if (cursor && trailContainer && isDesktop()) {
   document.addEventListener('mousemove', (e) => {
     cursor.style.top = e.clientY + 'px';
     cursor.style.left = e.clientX + 'px';
@@ -15,9 +19,7 @@ if (cursor && trailContainer) {
     trail.style.left = e.clientX + 'px';
     trailContainer.appendChild(trail);
 
-    setTimeout(() => {
-      trail.remove();
-    }, 600);
+    setTimeout(() => trail.remove(), 600);
   });
 }
 
@@ -46,7 +48,7 @@ function generateParticles(containerSelector, particleCount = 30, sizeRange = [4
 }
 
 // ==============================
-// CREATE PARTICLES ON DOM LOAD
+// GENERATE PARTICLES ON DOM LOAD
 // ==============================
 window.addEventListener('DOMContentLoaded', () => {
   generateParticles('.hero .particles', 30, [4, 4], '#ffd700', [4, 8]);
@@ -56,7 +58,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==============================
-// SIMPLE TESTIMONIAL SLIDER
+// TESTIMONIAL SLIDER + STARS
 // ==============================
 document.addEventListener("DOMContentLoaded", function () {
   const slider = document.querySelector(".testimonial-slider");
@@ -65,49 +67,50 @@ document.addEventListener("DOMContentLoaded", function () {
   const nextBtn = document.querySelector(".slider-btn.next");
 
   let currentIndex = 0;
-  let total = testimonials.length;
+  const total = testimonials.length;
 
-  // Helper: check if we're on mobile (match CSS breakpoint)
-  function isMobile() {
-    return window.matchMedia('(max-width: 768px)').matches;
-  }
+  // Add 5 stars under each testimonial dynamically
+  testimonials.forEach(testimonial => {
+    const starContainer = document.createElement('div');
+    starContainer.classList.add('testimonial-stars');
+    for (let i = 0; i < 5; i++) {
+      const star = document.createElement('span');
+      star.innerHTML = '★';
+      starContainer.appendChild(star);
+    }
+    testimonial.appendChild(starContainer);
+  });
 
-  // Ensure slider dimensions and show only the current testimonial
+  // Update slider function
   function updateSlider() {
-    // Recalculate total in case testimonials were added dynamically
-    total = testimonials.length;
-
-    // Each slide is 100% width of viewport container
     const offset = -currentIndex * 100;
     slider.style.transform = `translateX(${offset}%)`;
   }
 
-  // Previous button
-  if (prevBtn) prevBtn.addEventListener("click", function () {
+  // Button events
+  if (prevBtn) prevBtn.addEventListener("click", () => {
     currentIndex = currentIndex === 0 ? total - 1 : currentIndex - 1;
     updateSlider();
   });
 
-  // Next button
-  if (nextBtn) nextBtn.addEventListener("click", function () {
+  if (nextBtn) nextBtn.addEventListener("click", () => {
     currentIndex = currentIndex === total - 1 ? 0 : currentIndex + 1;
     updateSlider();
   });
 
-  // Initialize slider and respond to resizes
-  function initSlider() {
-    // Make sure each testimonial has correct flex-basis width (100%)
-    testimonials.forEach(t => { t.style.flex = '0 0 100%'; t.style.width = '100%'; });
-    total = testimonials.length;
-    if (currentIndex >= total) currentIndex = Math.max(0, total - 1);
-    updateSlider();
-  }
+  // Initialize slider
+  testimonials.forEach(t => {
+    t.style.flex = '0 0 100%';
+    t.style.width = '100%';
+  });
+  updateSlider();
 
-  initSlider();
-
-  // Recalculate slide sizes on window resize
+  // Handle resize
   window.addEventListener('resize', () => {
-    initSlider();
+    testimonials.forEach(t => {
+      t.style.flex = '0 0 100%';
+      t.style.width = '100%';
+    });
+    updateSlider();
   });
 });
-

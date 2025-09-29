@@ -460,9 +460,6 @@ h1, h2, h3 {
   .slider-btn { font-size: 1.4rem; padding: 8px 12px; }
 }
 
-  body, button, a, input, textarea { cursor:auto !important; }
-  .cursor, .cursor-trail-container, .cursor-trail { display:none !important; }
-
 @media (min-width: 900px) {
   .testimonial-area { grid-column: 2/3; }
 }
