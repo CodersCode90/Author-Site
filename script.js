@@ -65,27 +65,49 @@ document.addEventListener("DOMContentLoaded", function () {
   const nextBtn = document.querySelector(".slider-btn.next");
 
   let currentIndex = 0;
-  const total = testimonials.length;
+  let total = testimonials.length;
 
-  // Show only the current testimonial
+  // Helper: check if we're on mobile (match CSS breakpoint)
+  function isMobile() {
+    return window.matchMedia('(max-width: 768px)').matches;
+  }
+
+  // Ensure slider dimensions and show only the current testimonial
   function updateSlider() {
+    // Recalculate total in case testimonials were added dynamically
+    total = testimonials.length;
+
+    // Each slide is 100% width of viewport container
     const offset = -currentIndex * 100;
     slider.style.transform = `translateX(${offset}%)`;
   }
 
   // Previous button
-  prevBtn.addEventListener("click", function () {
+  if (prevBtn) prevBtn.addEventListener("click", function () {
     currentIndex = currentIndex === 0 ? total - 1 : currentIndex - 1;
     updateSlider();
   });
 
   // Next button
-  nextBtn.addEventListener("click", function () {
+  if (nextBtn) nextBtn.addEventListener("click", function () {
     currentIndex = currentIndex === total - 1 ? 0 : currentIndex + 1;
     updateSlider();
   });
 
-  // Initialize slider
-  updateSlider();
+  // Initialize slider and respond to resizes
+  function initSlider() {
+    // Make sure each testimonial has correct flex-basis width (100%)
+    testimonials.forEach(t => { t.style.flex = '0 0 100%'; t.style.width = '100%'; });
+    total = testimonials.length;
+    if (currentIndex >= total) currentIndex = Math.max(0, total - 1);
+    updateSlider();
+  }
+
+  initSlider();
+
+  // Recalculate slide sizes on window resize
+  window.addEventListener('resize', () => {
+    initSlider();
+  });
 });
 
