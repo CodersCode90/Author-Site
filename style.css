@@ -253,6 +253,24 @@ h1, h2, h3 {
   gap: 15px;
 }
 
+/* ===============================
+   CONTACT DIVIDER / SPACING
+   =============================== */
+.contact-divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 2rem; /* adds spacing above and below */
+  border-top: 2px solid rgba(255, 111, 97, 0.4); /* subtle top border */
+  border-bottom: 2px solid rgba(255, 111, 97, 0.2); /* optional bottom border */
+  background: #111; /* same as page bg to keep design consistent */
+}
+
+.contact-divider .contact-buttons {
+  margin: 0; /* ensure centered alignment */
+}
+
+
 .contact-section label { font-weight: 600; font-size: 0.95rem; color: #ddd; text-align: left; }
 .contact-section input,
 .contact-section textarea {
