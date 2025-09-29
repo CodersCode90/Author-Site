@@ -22,181 +22,70 @@ if (cursor && trailContainer) {
 }
 
 // ==============================
-// INDEX HERO PARTICLES
+// PARTICLE GENERATOR FUNCTION
+// ==============================
+function generateParticles(containerSelector, particleCount = 30, sizeRange = [4, 6], color = '#ffd700', durationRange = [4, 10]) {
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.top = Math.random() * 100 + '%';
+    const size = Math.random() * (sizeRange[1] - sizeRange[0]) + sizeRange[0];
+    particle.style.width = size + 'px';
+    particle.style.height = size + 'px';
+    particle.style.backgroundColor = color;
+    particle.style.animationDuration = (Math.random() * (durationRange[1] - durationRange[0]) + durationRange[0]) + 's';
+    particle.style.animationDelay = Math.random() * 6 + 's';
+
+    container.appendChild(particle);
+  }
+}
+
+// ==============================
+// CREATE PARTICLES ON DOM LOAD
 // ==============================
 window.addEventListener('DOMContentLoaded', () => {
-  const indexParticlesContainer = document.querySelector('.hero .particles');
-  if (indexParticlesContainer) {
-    const particleCount = 30;
-    for (let i = 0; i < particleCount; i++) {
-      const particle = document.createElement('div');
-      particle.classList.add('particle');
-
-      particle.style.left = Math.random() * 100 + '%';
-      particle.style.top = Math.random() * 100 + '%';
-      const size = Math.random() * 6 + 4;
-      particle.style.width = size + 'px';
-      particle.style.height = size + 'px';
-      particle.style.backgroundColor = '#ffd700';
-      particle.style.animationDuration = (Math.random() * 6 + 4) + 's';
-      particle.style.animationDelay = Math.random() * 6 + 's';
-
-      indexParticlesContainer.appendChild(particle);
-    }
-  }
+  generateParticles('.hero .particles', 30, [4, 4], '#ffd700', [4, 8]);
+  generateParticles('.about-hero .particles', 30, [3, 4], '#ffd700', [5, 10]);
+  generateParticles('.book-hero .particles', 30, [4, 6], '#00f5ff', [4, 10]);
+  generateParticles('.book-particles', 30, [4, 6], '#ff6f61', [4, 10]);
 });
 
 // ==============================
-// ABOUT PAGE PARTICLES
+// SIMPLE TESTIMONIAL SLIDER
 // ==============================
-window.addEventListener('DOMContentLoaded', () => {
-  const aboutParticlesContainer = document.querySelector('.about-hero .particles');
-  if (aboutParticlesContainer) {
-    const aboutParticleCount = 30;
-    for (let i = 0; i < aboutParticleCount; i++) {
-      const particle = document.createElement('div');
-      particle.classList.add('particle');
+document.addEventListener("DOMContentLoaded", function () {
+  const slider = document.querySelector(".testimonial-slider");
+  const testimonials = document.querySelectorAll(".testimonial");
+  const prevBtn = document.querySelector(".slider-btn.prev");
+  const nextBtn = document.querySelector(".slider-btn.next");
 
-      particle.style.left = Math.random() * 100 + '%';
-      particle.style.top = Math.random() * 100 + '%';
-      const size = Math.random() * 4 + 3;
-      particle.style.width = size + 'px';
-      particle.style.height = size + 'px';
-      particle.style.backgroundColor = '#ffd700';
-      particle.style.animationDuration = (Math.random() * 5 + 5) + 's';
-      particle.style.animationDelay = Math.random() * 5 + 's';
+  let currentIndex = 0;
+  const total = testimonials.length;
 
-      aboutParticlesContainer.appendChild(particle);
-    }
-  }
-});
-
-// ==============================
-// BOOK PAGE PARTICLES
-// ==============================
-window.addEventListener('DOMContentLoaded', () => {
-  const bookParticlesContainer = document.querySelector('.book-hero .particles');
-  if (bookParticlesContainer) {
-    const bookParticleCount = 30;
-    for (let i = 0; i < bookParticleCount; i++) {
-      const particle = document.createElement('div');
-      particle.classList.add('particle');
-
-      particle.style.left = Math.random() * 100 + '%';
-      particle.style.top = Math.random() * 100 + '%';
-      const size = Math.random() * 6 + 4;
-      particle.style.width = size + 'px';
-      particle.style.height = size + 'px';
-      particle.style.backgroundColor = '#00f5ff';
-      particle.style.animationDuration = (Math.random() * 6 + 4) + 's';
-      particle.style.animationDelay = Math.random() * 6 + 's';
-
-      bookParticlesContainer.appendChild(particle);
-    }
-  }
-});
-
-// ==============================
-// INDEX BOOK PARTICLES
-// ==============================
-window.addEventListener('DOMContentLoaded', () => {
-  const bookParticlesContainer = document.querySelector('.book-particles');
-  if (bookParticlesContainer) {
-    const particleCount = 30;
-
-    for (let i = 0; i < particleCount; i++) {
-      const particle = document.createElement('div');
-      particle.classList.add('particle');
-
-      // Random position within the books section
-      particle.style.left = Math.random() * 100 + '%';
-      particle.style.top = Math.random() * 100 + '%';
-
-      // Random size
-      const size = Math.random() * 6 + 4;
-      particle.style.width = size + 'px';
-      particle.style.height = size + 'px';
-
-      // Random animation duration and delay
-      particle.style.animationDuration = (Math.random() * 6 + 4) + 's';
-      particle.style.animationDelay = Math.random() * 6 + 's';
-
-      bookParticlesContainer.appendChild(particle);
-    }
-  }
-});
-
-(function(){
-  document.addEventListener('DOMContentLoaded', () => {
-  const slider = document.querySelector('.testimonial-slider');
-  const testimonials = slider.querySelectorAll('.testimonial');
-  const prevBtn = document.querySelector('.slider-btn.prev');
-  const nextBtn = document.querySelector('.slider-btn.next');
-  let current = 0;
-  const AUTO_DELAY = 5000;
-  let autoTimer;
-
+  // Show only the current testimonial
   function updateSlider() {
-    testimonials.forEach((t, i) => {
-      t.classList.remove('active');
-      if (i === current) t.classList.add('active');
-    });
-
-    const offset = -(current * 70); // adjust to match .testimonial.active width
+    const offset = -currentIndex * 100;
     slider.style.transform = `translateX(${offset}%)`;
   }
 
-  function nextSlide() {
-    current = (current + 1) % testimonials.length;
+  // Previous button
+  prevBtn.addEventListener("click", function () {
+    currentIndex = currentIndex === 0 ? total - 1 : currentIndex - 1;
     updateSlider();
-  }
-
-  function prevSlide() {
-    current = (current - 1 + testimonials.length) % testimonials.length;
-    updateSlider();
-  }
-
-  function startAuto() {
-    autoTimer = setInterval(nextSlide, AUTO_DELAY);
-  }
-
-  function resetAuto() {
-    clearInterval(autoTimer);
-    startAuto();
-  }
-
-  if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); resetAuto(); });
-  if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); resetAuto(); });
-
-  updateSlider();
-  startAuto();
-});
-
-  const testimonialWidth = testimonials[0].offsetWidth + 16; // 16px gap
-  function updateSlider() {
-    testimonials.forEach((t, i) => {
-      t.classList.remove('active', 'prev', 'next');
-      if (i === current) t.classList.add('active');
-      if (i === (current - 1 + testimonials.length) % testimonials.length) t.classList.add('prev');
-      if (i === (current + 1) % testimonials.length) t.classList.add('next');
-   });
-   slider.style.transform = `translateX(-${current * testimonialWidth}px)`;
-  }
-
-
-function updateSlider() {
-  testimonials.forEach((t, i) => {
-    t.classList.remove('active');
-    if (i === current) t.classList.add('active');
   });
 
-  // Dynamically set viewport height
-  const viewport = document.querySelector('.testimonial-slider-viewport');
-  viewport.style.height = testimonials[current].offsetHeight + 'px';
+  // Next button
+  nextBtn.addEventListener("click", function () {
+    currentIndex = currentIndex === total - 1 ? 0 : currentIndex + 1;
+    updateSlider();
+  });
 
-  const offset = -(current * 70); // keeps slider moving
-  slider.style.transform = `translateX(${offset}%)`;
-}
+  // Initialize slider
+  updateSlider();
+});
 
-
-})();
