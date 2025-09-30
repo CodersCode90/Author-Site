@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hazel's Perception — Audiobook</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Listen to the audiobook of Hazel's Perception: What I Know Now. Exclusive access for subscribers." />
+  <style>
+    /* Simple, clean styling */
+    :root{
+      --accent:#ff6f61;
+      --max-width:900px;
+      --pad:18px;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:#111;
+      background:#fff;
+    }
+
+    /* Background for particles */
+    #particles-js {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+    background: #111; /* fallback */
+    }
+
+
+    body{ margin:0; padding:40px 18px; display:flex; justify-content:center; }
+    .container{ max-width:var(--max-width); width:100%; }
+    header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+    h1{ font-size:1.6rem; margin:0; }
+    p.lead{ margin:8px 0 20px 0; color:#444; line-height:1.45; }
+    .player-wrap{ position:relative; padding-bottom:56.25%; /* 16:9 */ height:0; overflow:hidden; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.08); }
+    .player-wrap iframe{ position:absolute; top:0; left:0; width:100%; height:100%; border:0; }
+    .meta{ margin-top:14px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .btn{
+      display:inline-block; padding:10px 16px; text-decoration:none; border-radius:6px; font-weight:600;
+      background:var(--accent); color:#fff;
+    }
+    .secondary{ background:transparent; color:var(--accent); border:1px solid rgba(0,0,0,0.06); padding:8px 12px; font-weight:600; }
+    footer{ margin-top:28px; color:#666; font-size:0.95rem; }
+    @media (max-width:520px){ body{ padding:24px 12px } h1{ font-size:1.2rem } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>Hazel’s Perception: What I Know Now — Audiobook</h1>
+        <h3>Narrated by: Sui-Lin Sampson</h3>
+        <p class="lead">Exclusive subscriber access. Stream the full audiobook below.</p>
+      </div>
+      <div>
+        <a class="btn" href="newsletter.html">Subscribe</a>
+      </div>
+    </header>
+
+    <!-- Replace VIDEO_ID with your YouTube video ID.
+         Make sure the video is set to "Unlisted" in YouTube if you want it hidden from public search.
+         If you'd like privacy-enhanced mode, use the src URL with "https://www.youtube-nocookie.com/embed/VIDEO_ID" -->
+    <div class="player-wrap">
+      <iframe
+        src="https://www.youtube.com/embed/GtGUeDJZ6dg?rel=0"
+        title="Hazel's Perception audiobook player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="meta">
+      <a class="btn" href="newsletter.html">Get Subscriber Access</a>
+      <a class="secondary" href="mailto:hello.michael.author@gmail.com">Contact</a>
+      <a href="index.html" class="btn">Back to Home</a>
+    </div>
+
+    <footer>
+      <p>
+        Note: This page is intended for subscribers. If you can see this and haven’t subscribed, please join via the Subscribe page.
+      </p>
+      <p style="margin-top:8px; font-size:0.9rem;">
+        Pro tip: set the YouTube upload to <strong>Unlisted</strong> (not Public). Then keep this page unlinked from your main nav so only people with the link—your subscribers—get access.
+      </p>
+      
+      <p>&copy; 2025 Michael Mangruen-Brown. All rights reserved. Follow me on 
+      <a href="https://www.tiktok.com/@greatauthor" target="_blank" rel="noopener">TikTok</a>, 
+      <a href="https://www.instagram.com/michael_brown1990" target="_blank" rel="noopener">Instagram</a>, 
+      <a href="https://www.facebook.com/bigblu.mangruen" target="_blank" rel="noopener">Facebook</a>, 
+      <a href="https://www.amazon.com/author/michael-mangruen-brown" target="_blank" rel="noopener">Amazon</a>,
+      </p>
+        <a href="mailto:michael.mangruenbrown.author@gmail.com">or email me</a>
+    </footer>
+  </div>
+
+    <!-- Fancy cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-trail-container"></div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
