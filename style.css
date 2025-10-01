@@ -154,6 +154,11 @@ h1, h2, h3 {
   background-color: #e65b50; /* slightly darker on hover */
 }
 
+input[type="text"], input[type="email"] {
+  color: #111; /* dark text */
+  background-color: #fff; /* ensures contrast */
+}
+
 
 /* ===============================
    BOOK GRID & PARTICLES
